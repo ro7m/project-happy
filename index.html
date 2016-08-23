@@ -14,7 +14,7 @@
       <div class="navbar-left">
         <a href="/"><img src="logo.jpeg" class="navbar-img img-responsive" /></a>
       </div>
-      <form class="navbar-form navbar-right">
+      <form id="video-search" class="navbar-form navbar-right">
         <div class="input-group">
           <input type="text" class="form-control" placeholder="Search for videos..." />
           <span class="input-group-btn">
@@ -24,4 +24,12 @@
       </form>
     </div>
   </nav>
+  <div class="container">
+    <div id="search-result" class="row" hidden></div>
+    <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg" hidden>
+      <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+    </svg>
+    <button id="load-more-results" class="btn btn-default">Load More Videos...</button>
+  </div>
+  <script type="text/javascript" src="application.js"></script>
 </body>
