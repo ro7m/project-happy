@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var nextPageToken, currentQuery;
+    var nextPageToken, currentQuery, playedVideo;
     var $resultDisplay = $('#search-result'),
         $spinner = $('.spinner'),
         $loadMoreButton = $('#load-more-results');
@@ -15,9 +15,10 @@ $(document).ready(function() {
             nextPageToken = res.nextPageToken;
             $resultDisplay.append('<h4>Suggestions based on your most recent search:</h4>')
             res.items.forEach(function(item) {
-                $resultDisplay.append(searchResult(item.snippet));
+                $resultDisplay.append(searchResult(item.snippet, item.id.videoId));
             });
             $resultDisplay.show();
+            bindResultClickEvent();
             $spinner.hide();
             $loadMoreButton.css('display', 'block');
         })
@@ -31,16 +32,17 @@ $(document).ready(function() {
         localStorage['lastQuery'] = currentQuery;
         $resultDisplay.html('');
         performVideosSearch(currentQuery, null, function(err, res) {
-            // console.log(res)
+            console.log(res)
             if (err) {
                 $spinner.hide();
                 return $resultDisplay.html('<h4 class="text-center">Fail to search! Please check your Internet connection and try again!</h4>');
             }
             nextPageToken = res.nextPageToken;
             res.items.forEach(function(item) {
-                $resultDisplay.append(searchResult(item.snippet));
+                $resultDisplay.append(searchResult(item.snippet, item.id.videoId));
             });
             $resultDisplay.show();
+            bindResultClickEvent();
             $spinner.hide();
             $loadMoreButton.css('display', 'block');
         })
@@ -56,13 +58,14 @@ $(document).ready(function() {
             }
             nextPageToken = res.nextPageToken;
             res.items.forEach(function(item) {
-                $resultDisplay.append(searchResult(item.snippet));
+                $resultDisplay.append(searchResult(item.snippet, item.id.videoId));
             });
-            $resultDisplay.show();
+            bindResultClickEvent();
             $spinner.hide();
             $loadMoreButton.css('display', 'block');
         });
     });
+
 });
 
 function performVideosSearch(query, token, callback) {
@@ -86,9 +89,16 @@ function performVideosSearch(query, token, callback) {
     })
 }
 
+function bindResultClickEvent() {
+    $('.result').click(function() {
+        $('#timer-modal').modal('show');
+        playedVideo = $(this).attr('id');
+    });
+}
+
 //design
-var searchResult = function(videoData) {
-    return '<div class="row result">\
+var searchResult = function(videoData, playId) {
+    return '<div id="' + playId + '" class="row result">\
               <div class="col-sm-3 col-xs-12">\
                 <img class="img-responsive" src="' + videoData.thumbnails.medium.url + '" />\
               </div>\

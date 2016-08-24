@@ -31,5 +31,30 @@
     </svg>
     <button id="load-more-results" class="btn btn-default">Load More Videos...</button>
   </div>
+  <div id="timer-modal" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">Set timer</h4>
+        </div>
+        <div class="modal-body">
+          <form id="timer" class="form-group row">
+            <div class="col-xs-8">
+              <input type="number" class="form-control" min="0" placeholder="this will be in minutes..."/>
+            </div>
+            <div class="col-xs-2">
+              <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-play"></i> Play</button>
+            </div>
+            <div class="col-xs-2">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
   <script type="text/javascript" src="application.js"></script>
 </body>
