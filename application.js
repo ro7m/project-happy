@@ -7,7 +7,11 @@ $(document).ready(function() {
     if (localStorage['lastQuery']) {
         $spinner.css('display', 'block');
         currentQuery = localStorage['lastQuery'];
-        performVideosSearch(currentQuery, null, function(res) {
+        performVideosSearch(currentQuery, null, function(err, res) {
+            if (err) {
+                $spinner.hide();
+                return $resultDisplay.html('<h4 class="text-center">Fail to search! Please check your Internet connection and try again!</h4>');
+            }
             nextPageToken = res.nextPageToken;
             $resultDisplay.append('<h4>Suggestions based on your most recent search:</h4>')
             res.items.forEach(function(item) {
@@ -26,8 +30,12 @@ $(document).ready(function() {
         currentQuery = $(this).find('input').val();
         localStorage['lastQuery'] = currentQuery;
         $resultDisplay.html('');
-        performVideosSearch(currentQuery, null, function(res) {
+        performVideosSearch(currentQuery, null, function(err, res) {
             // console.log(res)
+            if (err) {
+                $spinner.hide();
+                return $resultDisplay.html('<h4 class="text-center">Fail to search! Please check your Internet connection and try again!</h4>');
+            }
             nextPageToken = res.nextPageToken;
             res.items.forEach(function(item) {
                 $resultDisplay.append(searchResult(item.snippet));
@@ -40,14 +48,19 @@ $(document).ready(function() {
 
     $loadMoreButton.click(function() {
         $(this).hide();
-        performVideosSearch(currentQuery, nextPageToken, function(res) {
+        $spinner.css('display', 'block');
+        performVideosSearch(currentQuery, nextPageToken, function(err, res) {
+            if (err) {
+                $spinner.hide();
+                return $resultDisplay.html('<h4 class="text-center">Fail to search! Please check your Internet connection and try again!</h4>');
+            }
             nextPageToken = res.nextPageToken;
             res.items.forEach(function(item) {
                 $resultDisplay.append(searchResult(item.snippet));
             });
             $resultDisplay.show();
-            $('.spinner').hide();
-            $('#load-more-results').css('display', 'block');
+            $spinner.hide();
+            $loadMoreButton.css('display', 'block');
         });
     });
 });
@@ -67,9 +80,9 @@ function performVideosSearch(query, token, callback) {
         type: 'GET',
         data: data
     }).done(function(res) {
-        callback(res)
+        callback(null, res)
     }).fail(function(res) {
-        alert('Fail to make search request! Try again!');
+        callback(true);
     })
 }
 
