@@ -1,9 +1,11 @@
-$(document).ready(function() {
-    var nextPageToken, currentQuery, playedVideo;
-    var $resultDisplay = $('#search-result'),
-        $spinner = $('.spinner'),
-        $loadMoreButton = $('#load-more-results');
+var nextPageToken, currentQuery, playedVideo, playDuration = 2;
+var $resultDisplay = $('#search-result'),
+    $spinner = $('.spinner'),
+    $loadMoreButton = $('#load-more-results'),
+    $timerModal = $('#timer-modal'),
+    $videoScreening = $('#video-screening');
 
+$(document).ready(function() {
     if (localStorage['lastQuery']) {
         $spinner.css('display', 'block');
         currentQuery = localStorage['lastQuery'];
@@ -32,7 +34,7 @@ $(document).ready(function() {
         localStorage['lastQuery'] = currentQuery;
         $resultDisplay.html('');
         performVideosSearch(currentQuery, null, function(err, res) {
-            console.log(res)
+            // console.log(res)
             if (err) {
                 $spinner.hide();
                 return $resultDisplay.html('<h4 class="text-center">Fail to search! Please check your Internet connection and try again!</h4>');
@@ -66,6 +68,12 @@ $(document).ready(function() {
         });
     });
 
+    $('#timer').submit(function() {
+        event.preventDefault();
+        $timerModal.modal('hide');
+        $videoScreening.show();
+    })
+
 });
 
 function performVideosSearch(query, token, callback) {
@@ -91,7 +99,7 @@ function performVideosSearch(query, token, callback) {
 
 function bindResultClickEvent() {
     $('.result').click(function() {
-        $('#timer-modal').modal('show');
+        $timerModal.modal('show');
         playedVideo = $(this).attr('id');
     });
 }
