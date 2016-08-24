@@ -120,6 +120,7 @@ function bindResultClickEvent() {
 function countDown() {
     setTimeout(function() {
         player.destroy();
+        $videoScreening.html('<img class="img-responsive center-block ending-image" src="snack-time.jpg" />')
     }, playDuration);
 }
 

@@ -15,6 +15,10 @@
   box-shadow: 3px 3px 1px #bbb;
 }
 
+.ending-image {
+  margin-top: 20vh;
+}
+
 .spinner {
   margin: 0 auto 10px auto;
   -webkit-animation: rotator 1.4s linear infinite;
