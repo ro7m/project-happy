@@ -15,7 +15,7 @@ $(document).ready(function() {
                 return $resultDisplay.html('<h4 class="text-center">Fail to search! Please check your Internet connection and try again!</h4>');
             }
             nextPageToken = res.nextPageToken;
-            $resultDisplay.append('<h4>Suggestions based on your most recent search:</h4>')
+            $resultDisplay.append('<h4>Suggestions based on your most recent search:</h4>');
             res.items.forEach(function(item) {
                 $resultDisplay.append(searchResult(item.snippet, item.id.videoId));
             });
@@ -56,7 +56,9 @@ $(document).ready(function() {
         performVideosSearch(currentQuery, nextPageToken, function(err, res) {
             if (err) {
                 $spinner.hide();
-                return $resultDisplay.html('<h4 class="text-center">Fail to search! Please check your Internet connection and try again!</h4>');
+                $loadMoreButton.show();
+                $resultDisplay.find('h4.text-center').remove();
+                return $resultDisplay.append('<h4 class="text-center">Fail to load! Please check your Internet connection and try again!</h4>');
             }
             nextPageToken = res.nextPageToken;
             res.items.forEach(function(item) {
@@ -78,8 +80,9 @@ $(document).ready(function() {
             height: '390',
             width: '640',
             videoId: playedVideo,
+            playerVars: {autoplay: 1, loop: 1, playlist: playedVideo},
             events: {
-                'onReady': autoStart
+                'onReady': countDown
             }
         })
     })
@@ -114,8 +117,7 @@ function bindResultClickEvent() {
     });
 }
 
-function autoStart() {
-    player.playVideo();
+function countDown() {
     setTimeout(function() {
         player.destroy();
     }, playDuration);
