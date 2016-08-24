@@ -1,4 +1,4 @@
-var nextPageToken, currentQuery, playedVideo, playDuration = 2;
+var nextPageToken, currentQuery, playedVideo, playDuration = 120000, player;
 var $resultDisplay = $('#search-result'),
     $spinner = $('.spinner'),
     $loadMoreButton = $('#load-more-results'),
@@ -71,7 +71,17 @@ $(document).ready(function() {
     $('#timer').submit(function() {
         event.preventDefault();
         $timerModal.modal('hide');
+        var minutesToPlay = $timerModal.find('input').val();
+        if (minutesToPlay) playDuration = minutesToPlay * 60000;
         $videoScreening.show();
+        player = new YT.Player('video-screening', {
+            height: '390',
+            width: '640',
+            videoId: playedVideo,
+            events: {
+                'onReady': autoStart
+            }
+        })
     })
 
 });
@@ -102,6 +112,13 @@ function bindResultClickEvent() {
         $timerModal.modal('show');
         playedVideo = $(this).attr('id');
     });
+}
+
+function autoStart() {
+    player.playVideo();
+    setTimeout(function() {
+        player.destroy();
+    }, playDuration);
 }
 
 //design
