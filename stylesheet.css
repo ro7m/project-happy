@@ -145,4 +145,7 @@
   .navbar-form .input-group>.form-control {
     width: 400px;
   }
+  .modal .form-inline .form-control {
+    width: 420px;
+  }
 }
