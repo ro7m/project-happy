@@ -6,9 +6,9 @@ var $resultDisplay = $('#search-result'),
     $videoScreening = $('#video-screening');
 
 $(document).ready(function() {
-    if (localStorage['lastQuery']) {
+    if (localStorage.lastQuery) {
         $spinner.css('display', 'block');
-        currentQuery = localStorage['lastQuery'];
+        currentQuery = localStorage.lastQuery;
         performVideosSearch(currentQuery, null, function(err, res) {
             if (err) {
                 $spinner.hide();
@@ -23,7 +23,7 @@ $(document).ready(function() {
             bindResultClickEvent();
             $spinner.hide();
             $loadMoreButton.css('display', 'block');
-        })
+        });
     }
 
     $('#video-search').on( 'submit', function() {
@@ -31,7 +31,7 @@ $(document).ready(function() {
         $spinner.css('display', 'block');
         $loadMoreButton.hide();
         currentQuery = $(this).find('input').val();
-        localStorage['lastQuery'] = currentQuery;
+        localStorage.lastQuery = currentQuery;
         $resultDisplay.html('');
         performVideosSearch(currentQuery, null, function(err, res) {
             // console.log(res)
@@ -47,7 +47,7 @@ $(document).ready(function() {
             bindResultClickEvent();
             $spinner.hide();
             $loadMoreButton.css('display', 'block');
-        })
+        });
     });
 
     $loadMoreButton.click(function() {
@@ -84,8 +84,8 @@ $(document).ready(function() {
             events: {
                 'onReady': countDown
             }
-        })
-    })
+        });
+    });
 
 });
 
@@ -104,10 +104,10 @@ function performVideosSearch(query, token, callback) {
         type: 'GET',
         data: data
     }).done(function(res) {
-        callback(null, res)
+        callback(null, res);
     }).fail(function(res) {
         callback(true);
-    })
+    });
 }
 
 function bindResultClickEvent() {
@@ -120,12 +120,13 @@ function bindResultClickEvent() {
 function countDown() {
     setTimeout(function() {
         player.destroy();
-        $videoScreening.html('<img class="img-responsive center-block ending-image" src="snack-time.jpg" />')
+        $videoScreening.html('<img class="img-responsive center-block ending-image" src="img/snack-time.jpg" />');
     }, playDuration);
 }
 
 //design
 var searchResult = function(videoData, playId) {
+    /*jshint multistr: true*/
     return '<div id="' + playId + '" class="row result">\
               <div class="col-sm-3 col-xs-12">\
                 <img class="img-responsive" src="' + videoData.thumbnails.medium.url + '" />\
@@ -136,4 +137,4 @@ var searchResult = function(videoData, playId) {
                 <p>' + videoData.description + '</p>\
               </div>\
             </div>';
-}
+};
