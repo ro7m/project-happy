@@ -58,15 +58,26 @@
           </button>
           <h4 class="modal-title">Set timer</h4>
         </div>
+        <form id="timer">
         <div class="modal-body">
-          <form id="timer" class="form-inline">
-            <div class="form-group">
-              <input type="number" class="form-control" min="0" placeholder="this will be in minutes, default to 2 mins..."/>
-            </div>
-              <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-play"></i> Play</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          </form>
+            <fieldset class="form-group">
+              <label for="time-duration">Duration of play</label>
+              <input type="number" name="time-duration" class="form-control" min="0" placeholder="this will be in minutes, default to 2 mins..."/>
+            </fieldset>
+            <fieldset class="form-group">
+              <label for="directed-action">Directed action</label>
+              <br />
+              <input type="radio" name="directed-action" id="go-home" value="Go Home" checked/>
+              <label for="go-home" class="radio-inline btn btn-default">Go Home</label>
+              <input type="radio" name="directed-action" id="eat-snack" value="Eat Snack" />
+              <label for="eat-snack" class="radio-inline btn btn-default">Eat Snack</label>
+            </fieldset>
         </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn"><i class="glyphicon glyphicon-play"></i> Play</button>
+          <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+        </div>
+        </form>
       </div>
     </div>
   </div>

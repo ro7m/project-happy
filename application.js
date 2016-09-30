@@ -1,4 +1,4 @@
-var nextPageToken, currentQuery, playedVideo, playDuration = 120000, player;
+var nextPageToken, currentQuery, playedVideo, playDuration = 120000, directedAction, player;
 var $resultDisplay = $('#search-result'),
     $spinner = $('.spinner'),
     $loadMoreButton = $('#load-more-results'),
@@ -73,8 +73,9 @@ $(document).ready(function() {
     $('#timer').submit(function() {
         event.preventDefault();
         $timerModal.modal('hide');
-        var minutesToPlay = $timerModal.find('input').val();
+        var minutesToPlay = $(this).find('input[name="time-duration"]').val();
         if (minutesToPlay) playDuration = minutesToPlay * 60000;
+        directedAction = $(this).find('input[name="directed-action"]:checked').val();
         $videoScreening.show();
         player = new YT.Player('video-screening', {
             height: '390',
@@ -120,7 +121,19 @@ function bindResultClickEvent() {
 function countDown() {
     setTimeout(function() {
         player.destroy();
-        $videoScreening.html('<img class="img-responsive center-block ending-image" src="img/snack-time.jpg" />');
+        var imgURL;
+        switch (directedAction) {
+            case 'Go Home':
+                imgURL = './img/go-home.jpg';
+                break;
+            case 'Eat Snack':
+                imgURL = './img/snack-time.jpg';
+                break;
+            default:
+                imgURL = './img/go-home.jpg';
+                break;
+        }
+        $videoScreening.html('<img class="img-responsive center-block ending-image" src="' + imgURL + '" />');
     }, playDuration);
 }
 
