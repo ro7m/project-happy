@@ -20,17 +20,16 @@ $(document).ready(function() {
                 $resultDisplay.append(searchResult(item.snippet, item.id.videoId));
             });
             $resultDisplay.show();
-            bindResultClickEvent();
             $spinner.hide();
             $loadMoreButton.css('display', 'block');
         });
     }
 
-    $('#video-search').on( 'submit', function() {
+    $(document).on( 'submit', '#video-search', function(event) {
         event.preventDefault();
         $spinner.css('display', 'block');
         $loadMoreButton.hide();
-        currentQuery = $(this).find('input').val();
+        currentQuery = $(event.currentTarget).find('input').val();
         localStorage.lastQuery = currentQuery;
         $resultDisplay.html('');
         performVideosSearch(currentQuery, null, function(err, res) {
@@ -44,14 +43,18 @@ $(document).ready(function() {
                 $resultDisplay.append(searchResult(item.snippet, item.id.videoId));
             });
             $resultDisplay.show();
-            bindResultClickEvent();
             $spinner.hide();
             $loadMoreButton.css('display', 'block');
         });
     });
 
-    $loadMoreButton.click(function() {
-        $(this).hide();
+    $(document).on('click', '.result', function(event) {
+        $timerModal.modal('show');
+        playedVideo = $(event.currentTarget).attr('id');
+    });
+
+    $(document).on('click', '#load-more-results', function(event) {
+        $(event.currentTarget).hide();
         $spinner.css('display', 'block');
         performVideosSearch(currentQuery, nextPageToken, function(err, res) {
             if (err) {
@@ -64,18 +67,17 @@ $(document).ready(function() {
             res.items.forEach(function(item) {
                 $resultDisplay.append(searchResult(item.snippet, item.id.videoId));
             });
-            bindResultClickEvent();
             $spinner.hide();
             $loadMoreButton.css('display', 'block');
         });
     });
 
-    $('#timer').submit(function() {
+    $(document).on('submit', '#timer', function(event) {
         event.preventDefault();
         $timerModal.modal('hide');
-        var minutesToPlay = $(this).find('input[name="time-duration"]').val();
+        var minutesToPlay = $(event.currentTarget).find('input[name="time-duration"]').val();
         if (minutesToPlay) playDuration = minutesToPlay * 60000;
-        directedAction = $(this).find('input[name="directed-action"]:checked').val();
+        directedAction = $(event.currentTarget).find('input[name="directed-action"]:checked').val();
         $videoScreening.show();
         player = new YT.Player('video-screening', {
             height: '390',
@@ -108,13 +110,6 @@ function performVideosSearch(query, token, callback) {
         callback(null, res);
     }).fail(function(res) {
         callback(true);
-    });
-}
-
-function bindResultClickEvent() {
-    $('.result').click(function() {
-        $timerModal.modal('show');
-        playedVideo = $(this).attr('id');
     });
 }
 
