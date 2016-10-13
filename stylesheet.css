@@ -16,7 +16,7 @@
 }
 
 .ending-image {
-  margin-top: 20vh;
+  margin-top: 5vh;
 }
 
 .spinner {
@@ -184,6 +184,80 @@
 #timer button[type="button"]:hover {
   background-color: #000;
   color: #fff;
+}
+
+/* Base for label styling */
+#timer #prevideo-activity + label {
+  border: none;
+}
+
+#timer #prevideo-activity[type="checkbox"]:not(:checked),
+#timer #prevideo-activity[type="checkbox"]:checked {
+  position: absolute;
+  left: -9999px;
+}
+#timer #prevideo-activity[type="checkbox"]:not(:checked) + label,
+#timer #prevideo-activity[type="checkbox"]:checked + label {
+  position: relative;
+  padding-left: 25px;
+  cursor: pointer;
+}
+
+/* checkbox aspect */
+#timer #prevideo-activity[type="checkbox"]:not(:checked) + label:before,
+#timer #prevideo-activity[type="checkbox"]:checked + label:before {
+  content: '';
+  position: absolute;
+  left:0; top: 2px;
+  width: 17px; height: 17px;
+  border: 1px solid #aaa;
+  background: #f8f8f8;
+  border-radius: 3px;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,.3)
+}
+/* checked mark aspect */
+#timer #prevideo-activity[type="checkbox"]:not(:checked) + label:after,
+#timer #prevideo-activity[type="checkbox"]:checked + label:after {
+  content: '✔';
+  position: absolute;
+  top: 3px; left: 4px;
+  font-size: 18px;
+  line-height: 0.8;
+  color: #09ad7e;
+  transition: all .2s;
+}
+/* checked mark aspect changes */
+#timer #prevideo-activity[type="checkbox"]:not(:checked) + label:after {
+  opacity: 0;
+  transform: scale(0);
+}
+#timer #prevideo-activity[type="checkbox"]:checked + label:after {
+  opacity: 1;
+  transform: scale(1);
+}
+/* disabled checkbox */
+#timer #prevideo-activity[type="checkbox"]:disabled:not(:checked) + label:before,
+#timer #prevideo-activity[type="checkbox"]:disabled:checked + label:before {
+  box-shadow: none;
+  border-color: #bbb;
+  background-color: #ddd;
+}
+
+#timer #prevideo-activity[type="checkbox"]:disabled:checked + label:after {
+  color: #999;
+}
+
+#timer #prevideo-activity[type="checkbox"]:disabled + label {
+  color: #aaa;
+}
+
+#timer #prevideo-activity[type="checkbox"]:checked:focus + label:before,
+#timer #prevideo-activity[type="checkbox"]:not(:checked):focus + label:before {
+  border: 1px dotted blue;
+}
+
+#timer #prevideo-activity + label:hover:before {
+  border: 1px solid #4778d9!important;
 }
 
 @media only screen and (max-width: 768px) {

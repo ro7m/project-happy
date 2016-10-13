@@ -63,16 +63,24 @@
         <form id="timer">
         <div class="modal-body">
             <fieldset class="form-group">
+              <input type="checkbox" id="prevideo-activity" />
+              <label for="prevideo-activity">Enable prevideo activity suggestions</label>
+              <div id="prevideo-activity-options">
+              </div>
+            </fieldset>
+            <fieldset class="form-group">
               <label for="time-duration">Duration of play</label>
               <input type="number" name="time-duration" class="form-control" min="0" placeholder="this will be in minutes, default to 2 mins..."/>
             </fieldset>
             <fieldset class="form-group">
               <label for="directed-action">Directed action</label>
               <br />
-              <input type="radio" name="directed-action" id="go-home" value="Go Home" checked/>
-              <label for="go-home" class="radio-inline btn btn-default">Go Home</label>
-              <input type="radio" name="directed-action" id="eat-snack" value="Eat Snack" />
-              <label for="eat-snack" class="radio-inline btn btn-default">Eat Snack</label>
+              <input type="radio" name="directed-action" id="postvid-go-home" value="Go Home" checked/>
+              <label for="postvid-go-home" class="radio-inline btn btn-default">Go Home</label>
+              <input type="radio" name="directed-action" id="postvid-eat-snack" value="Eat Snack" />
+              <label for="postvid-eat-snack" class="radio-inline btn btn-default">Eat Snack</label>
+              <input type="radio" name="directed-action" id="postvid-drawing" value="Draw" />
+              <label for="postvid-drawing" class="radio-inline btn btn-default">Draw</label>
             </fieldset>
         </div>
         <div class="modal-footer">
