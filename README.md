@@ -15,9 +15,24 @@ The video will be followed by visual instruction for the child to move on to oth
 ###Tech stack
 
 - HTML5
-- CSS3 + Bootstrap
-- Javascript + jQuery
+- CSS3 + ReactBootstrap
+- Javascript + ReactJS
 - Youtube API
+
+###Getting started
+
+```
+git clone git@github.com:stanleynguyen/project-happy.git
+cd project-happy/
+npm install
+npm run dev
+```
+and start coding!
+
+to push changes:
+```
+npm run build && git push
+```
 
 ###Checklist
 - [x] Youtube Streaming and play duration timer
