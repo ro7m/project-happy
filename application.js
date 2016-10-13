@@ -9,6 +9,7 @@ $(document).ready(function() {
     if (localStorage.lastQuery) {
         $spinner.css('display', 'block');
         currentQuery = localStorage.lastQuery;
+        $resultDisplay.html('');
         performVideosSearch(currentQuery, null, function(err, res) {
             if (err) {
                 $spinner.hide();
