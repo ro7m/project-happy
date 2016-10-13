@@ -22,4 +22,5 @@ The video will be followed by visual instruction for the child to move on to oth
 ###Checklist
 - [x] Youtube Streaming and play duration timer
 - [x] options for directing after-video activities
-- [ ] options for before-video activities
+- [x] options for before-video activities
+- [ ] switch to react for ease of maintenance while still user-experimenting
