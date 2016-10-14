@@ -106,7 +106,7 @@ $(document).ready(function() {
 });
 
 function prevideoCountDown (imgURL, duration) {
-    $videoScreening.html('<img class="img-responsive center-block ending-image" src="' + imgURL + '" />');
+    $videoScreening.html('<img class="img-responsive centered" src="' + imgURL + '" />');
     setTimeout(function () {
         player();
     }, duration);
@@ -164,7 +164,7 @@ function countDown() {
                 imgURL = './img/go-home.jpg';
                 break;
         }
-        $videoScreening.html('<img class="img-responsive center-block ending-image" src="' + imgURL + '" />');
+        $videoScreening.html('<img class="img-responsive centered" src="' + imgURL + '" />');
     }, playDuration);
 }
 
