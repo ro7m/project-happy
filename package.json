@@ -27,6 +27,7 @@
   "homepage": "https://github.com/stanleynguyen/project-happy#readme",
   "dependencies": {
     "react": "^15.3.2",
+    "react-bootstrap": "^0.30.5",
     "react-dom": "^15.3.2"
   },
   "devDependencies": {

@@ -15,8 +15,15 @@
   box-shadow: 3px 3px 1px #bbb;
 }
 
-.ending-image {
-  margin-top: 5vh;
+.centered {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 .spinner {
