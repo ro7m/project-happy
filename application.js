@@ -98,7 +98,7 @@ $(document).ready(function() {
                 prevideoCountDown('./img/snack-time.jpg', minutesToPrevidActivity);
                 break;
             default:
-                player();
+                createPlayer();
                 break;
         }
     });
@@ -108,13 +108,13 @@ $(document).ready(function() {
 function prevideoCountDown (imgURL, duration) {
     $videoScreening.html('<img class="img-responsive centered" src="' + imgURL + '" />');
     setTimeout(function () {
-        player();
+        createPlayer();
     }, duration);
 }
 
-var player = function () {
+var createPlayer = function () {
     $videoScreening.html('');
-    return new YT.Player('video-screening', {
+    player = new YT.Player('video-screening', {
         height: '390',
         width: '640',
         videoId: playedVideo,
