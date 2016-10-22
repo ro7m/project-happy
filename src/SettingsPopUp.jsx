@@ -42,7 +42,8 @@ class SettingsPopUp extends React.Component {
                   <span>Enable prevideo activity suggestions</span>
                 </Checkbox>
               </FormGroup>
-              { (() => {
+              {
+                (() => {
                   if ( this.state.showPrevid ) {
                     return (
                       <div>

@@ -3,6 +3,10 @@
   margin: 2%;
 }
 
+#results .btn.btn-default {
+  margin-bottom: 10px;
+}
+
 .result {
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -30,6 +34,7 @@
   margin: 0 auto 10px auto;
   -webkit-animation: rotator 1.4s linear infinite;
           animation: rotator 1.4s linear infinite;
+  display: block;
 }
 
 @-webkit-keyframes rotator {

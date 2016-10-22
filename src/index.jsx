@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 
 import NavigationBar from './NavigationBar.jsx';
+import SearchResult from './SearchResult.jsx';
 
 class App extends React.Component {
   constructor () {
@@ -14,7 +15,7 @@ class App extends React.Component {
         postvid: {
           activity: 'Drawing'
         },
-        lastQuery: null
+        lastQuery: 'hello'
       }
       localStorage.setItem('settings', JSON.stringify(this.state));
     }
@@ -22,7 +23,10 @@ class App extends React.Component {
 
   render () {
     return (
-      <NavigationBar />
+      <div>
+        <NavigationBar />
+        <SearchResult {...this.state} />
+      </div>
     )
   }
 }
