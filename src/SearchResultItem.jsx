@@ -8,7 +8,7 @@ class SearchResultItem extends React.Component {
 
   render () {
     return (
-      <Row className="result">
+      <Row className="result" onClick={this.props.startPlaying}>
         <Col xs={12} sm={3}>
           <Image responsive src={this.props.thumbnails.medium.url} />
         </Col>

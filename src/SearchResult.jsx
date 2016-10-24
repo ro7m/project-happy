@@ -10,7 +10,7 @@ class SearchResult extends React.Component {
     super(props);
     this.state = { results: null };
     this.loadMoreResults = this.loadMoreResults.bind(this);
-
+    console.log(this.props)
     this.data = {
       key: 'AIzaSyDZYAKp1cVowIRmnV4jXh_C2x0vDVLHvYU',
       part: 'snippet',
@@ -69,7 +69,14 @@ class SearchResult extends React.Component {
       <Grid id="results">
         {
           this.state.results.map(item => {
-            return (<SearchResultItem key={item.id.videoId} {...item.snippet} />);
+            return (
+              <SearchResultItem
+                key={item.id.videoId}
+                id={item.id.videoId}
+                {...item.snippet}
+                startPlaying={this.props.startPlaying.bind(this, item.id.videoId)}
+                />
+            );
           })
         }
         {( this.state.loading ) ? (<Spinner />) : <Button className="center-block" onClick={this.loadMoreResults}>Load More Videos...</Button>}
