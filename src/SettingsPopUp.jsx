@@ -1,16 +1,26 @@
 import React from 'react';
-import { Nav, NavItem, FormGroup, ControlLabel, FormControl, Checkbox, Radio, Glyphicon, Button, Modal } from 'react-bootstrap';
+import Nav from 'react-bootstrap/lib/Nav';
+import NavItem from 'react-bootstrap/lib/NavItem';
+import FormGroup from 'react-bootstrap/lib/FormGroup';
+import ControlLabel from 'react-bootstrap/lib/ControlLabel';
+import FormControl from 'react-bootstrap/lib/FormControl';
+import Checkbox from 'react-bootstrap/lib/Checkbox';
+import Radio from 'react-bootstrap/lib/Radio';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import Button from 'react-bootstrap/lib/Button';
+import Modal from 'react-bootstrap/lib/Modal';
 
 class SettingsPopUp extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
       showModal: false,
-      showPrevid: false,
+      showPrevid: this.props.previd !== null,
+      settings: this.props
     };
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
-    this.previd = this.previd.bind(this);
+    this.showPrevid = this.showPrevid.bind(this);
   }
 
   close () {
@@ -21,8 +31,20 @@ class SettingsPopUp extends React.Component {
     this.setState({ showModal: true });
   }
 
-  previd () {
-    this.setState({ showPrevid: !this.state.showPrevid });
+  showPrevid () {
+    if ( this.state.showPrevid ) {
+      this.setState({ showPrevid: false });
+    } else {
+      let newSettings = JSON.parse(JSON.stringify(this.state.settings));
+      newSettings.previd = {
+        activity: 'Draw',
+        duration: 120000
+      }
+      this.setState({
+        showPrevid: true,
+        settings: newSettings
+       });
+    }
   }
 
   render () {
@@ -38,7 +60,9 @@ class SettingsPopUp extends React.Component {
           <form  id="timer">
             <Modal.Body>
               <FormGroup>
-                <Checkbox id="prevideo-activity" onClick={this.previd}>
+                <Checkbox id="prevideo-activity"
+                  onClick={this.showPrevid}
+                  checked={this.state.showPrevid}>
                   <span>Enable prevideo activity suggestions</span>
                 </Checkbox>
               </FormGroup>
@@ -48,10 +72,16 @@ class SettingsPopUp extends React.Component {
                     return (
                       <div>
                         <FormGroup>
-                          <Radio inline defaultChecked name="prevideo-activity" value="Draw">
+                          <Radio
+                            inline name="prevideo-activity"
+                            value="Draw"
+                            defaultChecked={this.state.settings.previd.activity === 'Draw'}>
                             <span className="btn btn-default">Draw</span>
                           </Radio>
-                          <Radio inline name="prevideo-activity" value="Eat Snack">
+                          <Radio
+                            inline name="prevideo-activity"
+                            value="Eat Snack"
+                            defaultChecked={this.state.settings.previd.activity === 'Eat Snack'}>
                             <span className="btn btn-default">Eat Snack</span>
                           </Radio>
                         </FormGroup>
@@ -60,7 +90,8 @@ class SettingsPopUp extends React.Component {
                           <FormControl
                             type="number"
                             name="prevideo-duration"
-                            placeholder="this will be in minutes, default to 2 mins..." />
+                            placeholder="this will be in minutes, default to 2 mins..."
+                            defaultValue={this.state.settings.previd.duration/60000} />
                         </FormGroup>
                       </div>
                     );
@@ -74,18 +105,28 @@ class SettingsPopUp extends React.Component {
                 <FormControl
                   type="number"
                   name="duration"
-                  placeholder="this will be in minutes, default to 2 mins..." />
+                  placeholder="this will be in minutes, default to 2 mins..."
+                  defaultValue={this.state.settings.playDuration/60000} />
               </FormGroup>
               <FormGroup>
                 <ControlLabel>Directed Action</ControlLabel>
                 <br/>
-                <Radio inline defaultChecked value="Go Home" name="directed-action">
+                <Radio inline
+                  value="Go Home"
+                  name="directed-action"
+                  defaultChecked={this.state.settings.postvid.activity === 'Go Home'}>
                   <span className="btn btn-default">Go Home</span>
                 </Radio>
-                <Radio inline value="Eat Snack" name="directed-action">
+                <Radio inline
+                  value="Eat Snack"
+                  name="directed-action"
+                  defaultChecked={this.state.settings.postvid.activity === 'Eat Snack'}>
                   <span  className="btn btn-default">Eat Snack</span>
                 </Radio>
-                <Radio inline value="Draw" name="directed-action">
+                <Radio inline
+                  value="Draw"
+                  name="directed-action"
+                  defaultChecked={this.state.settings.postvid.activity === 'Draw'}>
                   <span className="btn btn-default">Draw</span>
                 </Radio>
               </FormGroup>

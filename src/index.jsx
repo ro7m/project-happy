@@ -15,7 +15,7 @@ class App extends React.Component {
         previd: null,
         playDuration: 120000,
         postvid: {
-          activity: 'Draw'
+          activity: 'Go Home'
         },
         lastQuery: 'hello'
       }
@@ -24,8 +24,12 @@ class App extends React.Component {
     this.state.playing = null;
   }
 
+  updateSettings (newSettings) {
+    this.setState({ settings: newSettings });
+    localStorage.setItem('settings', JSON.stringify(this.state.settings));
+  }
+
   startPlaying (videoId) {
-    console.log(videoId)
     this.setState({ playing: videoId })
   }
 
@@ -33,7 +37,7 @@ class App extends React.Component {
     if ( this.state.playing ) return <Screening {...this.state} />;
     return (
       <div>
-        <NavigationBar />
+        <NavigationBar {...this.state.settings} updateSettings={this.updateSettings.bind(this)} />
         <SearchResult {...this.state.settings} startPlaying={this.startPlaying.bind(this)} />
       </div>
     )

@@ -1,5 +1,4 @@
 import React from 'react';
-import { } from 'react-bootstrap';
 
 import Player from './Player.jsx';
 

@@ -25,7 +25,7 @@ class NavigationBar extends React.Component {
               </InputGroup>
             </FormGroup>
           </Navbar.Form>
-          <SettingsPopUp />
+          <SettingsPopUp {...this.props} updateSettings={this.props.updateSettings} />
         </Navbar.Collapse>
       </Navbar>
     )

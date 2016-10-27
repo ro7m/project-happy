@@ -1,5 +1,6 @@
 import React from 'react';
-import { Grid, Button } from 'react-bootstrap';
+import Grid from 'react-bootstrap/lib/Grid';
+import Button from 'react-bootstrap/lib/Button';
 import $ from 'jquery';
 
 import Spinner from './Spinner.jsx';
@@ -10,7 +11,6 @@ class SearchResult extends React.Component {
     super(props);
     this.state = { results: null };
     this.loadMoreResults = this.loadMoreResults.bind(this);
-    console.log(this.props)
     this.data = {
       key: 'AIzaSyDZYAKp1cVowIRmnV4jXh_C2x0vDVLHvYU',
       part: 'snippet',

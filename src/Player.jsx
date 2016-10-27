@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from 'react-bootstrap';
+import Grid from 'react-bootstrap/lib/Grid';
 
 class Player extends React.Component {
   constructor (props) {
