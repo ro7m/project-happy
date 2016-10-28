@@ -17,7 +17,7 @@ class App extends React.Component {
         postvid: {
           activity: 'Go Home'
         },
-        lastQuery: 'doge'
+        lastQuery: null
       }
       localStorage.setItem('settings', JSON.stringify(this.state.settings));
     }

@@ -14,12 +14,9 @@ class NavigationBar extends React.Component {
       <Navbar fluid={true}>
         <Navbar.Header>
           <a href="/"><img className="navbar-img img-responsive" src="public/img/logo.jpeg" /></a>
-          <Navbar.Toggle />
         </Navbar.Header>
-        <Navbar.Collapse>
-          <SearchBox {...this.props} updateSettings={this.props.updateSettings} />
-          <SettingsPopUp {...this.props} updateSettings={this.props.updateSettings} />
-        </Navbar.Collapse>
+        <SearchBox {...this.props} updateSettings={this.props.updateSettings} />
+        <SettingsPopUp {...this.props} updateSettings={this.props.updateSettings} />
       </Navbar>
     )
   }
