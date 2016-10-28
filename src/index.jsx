@@ -13,7 +13,7 @@ class App extends React.Component {
     else {
       this.state.settings = {
         previd: null,
-        playDuration: 120000,
+        playDuration: 2,
         postvid: {
           activity: 'Go Home'
         },
