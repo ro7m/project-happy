@@ -28,7 +28,11 @@ class SettingsPopUp extends React.Component {
   }
 
   close () {
-    this.setState({ showModal: false });
+    this.setState({
+      showModal: false,
+      showPrevid: this.props.previd !== null,
+      settings: JSON.parse(JSON.stringify(this.props))
+    });
   }
 
   open () {
@@ -85,7 +89,7 @@ class SettingsPopUp extends React.Component {
     if ( this.state.settings.previd ) this.state.settings.previd.duration = this.state.settings.previd.duration || 2;
     this.state.settings.playDuration = this.state.settings.playDuration || 2;
     this.props.updateSettings(this.state.settings);
-    this.close();
+    this.setState({ showModal:false });
   }
 
   render () {
