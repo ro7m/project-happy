@@ -13,6 +13,12 @@ class Screening extends React.Component {
         case 'Eat Snack':
           this.imgUrl = 'public/img/snack-time.jpg';
           break;
+        case 'Francis':
+          this.imgUrl = 'public/img/francis.jpg';
+          break;
+        case 'Schedule':
+          this.imgUrl = 'public/img/schedule.jpeg';
+          break;
         default:
           break;
       }
@@ -30,7 +36,6 @@ class Screening extends React.Component {
   }
 
   countDownToPostvid () {
-    console.log(this.props.settings.postvid.activity)
     switch ( this.props.settings.postvid.activity ) {
       case 'Draw':
         this.imgUrl = 'public/img/drawing.jpg';
@@ -40,6 +45,12 @@ class Screening extends React.Component {
         break;
       case 'Go Home':
         this.imgUrl = 'public/img/go-home.jpg';
+        break;
+      case 'Francis':
+        this.imgUrl = 'public/img/francis.jpg';
+        break;
+      case 'Schedule':
+        this.imgUrl = 'public/img/schedule.jpeg';
         break;
       default:
         this.imgUrl = 'public/img/go-home.jpg';

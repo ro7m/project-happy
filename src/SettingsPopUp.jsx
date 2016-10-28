@@ -117,15 +117,29 @@ class SettingsPopUp extends React.Component {
                             name="prevideo-activity"
                             value="Draw"
                             checked={this.state.settings.previd.activity === 'Draw'}
-                            onChange={() => this.onPrevidActivityChange('Draw')}>
+                            onChange={() => this.onPrevidActivityChange('Draw')} >
                             <span className="btn btn-default">Draw</span>
                           </Radio>
                           <Radio inline
                             name="prevideo-activity"
                             value="Eat Snack"
                             checked={this.state.settings.previd.activity === 'Eat Snack'}
-                            onChange={() => this.onPrevidActivityChange('Eat Snack')}>
+                            onChange={() => this.onPrevidActivityChange('Eat Snack')} >
                             <span className="btn btn-default">Eat Snack</span>
+                          </Radio>
+                          <Radio inline
+                            name="prevideo-activity"
+                            value="Francis"
+                            checked={this.state.settings.previd.activity === 'Francis'}
+                            onChange={() => this.onPrevidActivityChange('Francis')} >
+                            <span className="btn btn-default">Francis</span>
+                          </Radio>
+                          <Radio inline
+                            name="prevideo-activity"
+                            value="Schedule"
+                            checked={this.state.settings.previd.activity === 'Schedule'}
+                            onChange={() => this.onPrevidActivityChange('Schedule')} >
+                            <span className="btn btn-default">Schedule</span>
                           </Radio>
                         </FormGroup>
                         <FormGroup>
@@ -176,6 +190,20 @@ class SettingsPopUp extends React.Component {
                   checked={this.state.settings.postvid.activity === 'Draw'}
                   onChange={() => this.onPostvidActivityChange('Draw')} >
                   <span className="btn btn-default">Draw</span>
+                </Radio>
+                <Radio inline
+                  value="Francis"
+                  name="directed-action"
+                  checked={this.state.settings.postvid.activity === 'Francis'}
+                  onChange={() => this.onPostvidActivityChange('Francis')} >
+                  <span className="btn btn-default">Francis</span>
+                </Radio>
+                <Radio inline
+                  value="Schedule"
+                  name="directed-action"
+                  checked={this.state.settings.postvid.activity === 'Schedule'}
+                  onChange={() => this.onPostvidActivityChange('Schedule')} >
+                  <span className="btn btn-default">Schedule</span>
                 </Radio>
               </FormGroup>
             </Modal.Body>

@@ -29,7 +29,6 @@ class SearchResult extends React.Component {
   }
 
   componentDidMount () {
-    console.log('did')
     if ( !this.props.lastQuery ) return;
     this.performSearch();
   }
