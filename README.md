@@ -38,4 +38,4 @@ npm run build && git push
 - [x] Youtube Streaming and play duration timer
 - [x] options for directing after-video activities
 - [x] options for before-video activities
-- [ ] switch to react for ease of maintenance while still user-experimenting
+- [x] switch to react for ease of maintenance while still user-experimenting
