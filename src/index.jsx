@@ -17,7 +17,7 @@ class App extends React.Component {
         postvid: {
           activity: 'Go Home'
         },
-        lastQuery: 'hello'
+        lastQuery: 'doge'
       }
       localStorage.setItem('settings', JSON.stringify(this.state.settings));
     }
@@ -26,7 +26,8 @@ class App extends React.Component {
 
   updateSettings (newSettings) {
     this.setState({ settings: newSettings });
-    localStorage.setItem('settings', JSON.stringify(this.state.settings));
+    this.forceUpdate();
+    localStorage.setItem('settings', JSON.stringify(newSettings));
   }
 
   startPlaying (videoId) {
@@ -38,7 +39,7 @@ class App extends React.Component {
     return (
       <div>
         <NavigationBar {...this.state.settings} updateSettings={this.updateSettings.bind(this)} />
-        <SearchResult {...this.state.settings} startPlaying={this.startPlaying.bind(this)} />
+        <SearchResult lastQuery={this.state.settings.lastQuery} startPlaying={this.startPlaying.bind(this)} />
       </div>
     )
   }

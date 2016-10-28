@@ -21,8 +21,20 @@ class SearchResult extends React.Component {
     }
   }
 
+  componentWillReceiveProps (nextProps) {
+    this.data.q = nextProps.lastQuery;
+    this.data.pageToken = null;
+    this.setState({ results: null });
+    this.performSearch();
+  }
+
   componentDidMount () {
+    console.log('did')
     if ( !this.props.lastQuery ) return;
+    this.performSearch();
+  }
+
+  performSearch () {
     $.ajax({
       url: 'https://www.googleapis.com/youtube/v3/search',
       type: 'GET',

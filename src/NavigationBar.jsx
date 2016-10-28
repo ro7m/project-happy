@@ -1,5 +1,7 @@
 import React from 'react';
-import { Navbar, Nav, NavItem, InputGroup, FormGroup, FormControl, Glyphicon, Button } from 'react-bootstrap';
+import Navbar from 'react-bootstrap/lib/Navbar';
+
+import SearchBox from './SearchBox.jsx';
 import SettingsPopUp from './SettingsPopUp.jsx'
 
 class NavigationBar extends React.Component {
@@ -15,16 +17,7 @@ class NavigationBar extends React.Component {
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
-          <Navbar.Form pullLeft>
-            <FormGroup>
-              <InputGroup>
-                <FormControl type="text" placeholder="Search for videos..." />
-                <InputGroup.Button>
-                  <Button type="submit"><Glyphicon glyph="search" /> Search</Button>
-                </InputGroup.Button>
-              </InputGroup>
-            </FormGroup>
-          </Navbar.Form>
+          <SearchBox {...this.props} updateSettings={this.props.updateSettings} />
           <SettingsPopUp {...this.props} updateSettings={this.props.updateSettings} />
         </Navbar.Collapse>
       </Navbar>

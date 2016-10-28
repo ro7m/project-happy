@@ -16,7 +16,7 @@ class SettingsPopUp extends React.Component {
     this.state = {
       showModal: false,
       showPrevid: this.props.previd !== null,
-      settings: this.props
+      settings: JSON.parse(JSON.stringify(this.props))
     };
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
@@ -37,7 +37,12 @@ class SettingsPopUp extends React.Component {
 
   showPrevid () {
     if ( this.state.showPrevid ) {
-      this.setState({ showPrevid: false });
+      let newSettings = JSON.parse(JSON.stringify(this.state.settings));
+      newSettings.previd = null;
+      this.setState({
+        showPrevid: false,
+        settings: newSettings
+      });
     } else {
       let newSettings = JSON.parse(JSON.stringify(this.state.settings));
       newSettings.previd = {
@@ -47,7 +52,7 @@ class SettingsPopUp extends React.Component {
       this.setState({
         showPrevid: true,
         settings: newSettings
-       });
+      });
     }
   }
 
@@ -77,9 +82,10 @@ class SettingsPopUp extends React.Component {
 
   handleSubmit (event) {
     event.preventDefault();
-    this.state.settings.previd.duration = this.state.settings.previd.duration || 2;
+    if ( this.state.settings.previd ) this.state.settings.previd.duration = this.state.settings.previd.duration || 2;
     this.state.settings.playDuration = this.state.settings.playDuration || 2;
     this.props.updateSettings(this.state.settings);
+    this.close();
   }
 
   render () {
@@ -174,7 +180,7 @@ class SettingsPopUp extends React.Component {
               </FormGroup>
             </Modal.Body>
             <Modal.Footer>
-              <Button type="submit" onClick={this.close}><Glyphicon glyph="ok" />  Save</Button>
+              <Button type="submit"><Glyphicon glyph="ok" />  Save</Button>
               <Button type="button" onClick={this.close}><Glyphicon glyph="remove" />  Cancel</Button>
             </Modal.Footer>
           </form>

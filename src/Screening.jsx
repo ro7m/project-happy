@@ -23,7 +23,10 @@ class Screening extends React.Component {
   }
 
   countDownToPlay () {
-    setTimeout( this.setState.bind(this, {section: 'playing'}), this.props.settings.previd.duration);
+    setTimeout(
+      this.setState.bind(this, {section: 'playing'}),
+      this.props.settings.previd.duration * 60000
+    );
   }
 
   countDownToPostvid () {
@@ -42,7 +45,10 @@ class Screening extends React.Component {
         this.imgUrl = 'public/img/go-home.jpg';
         break;
     }
-    setTimeout( this.setState.bind(this, {section: 'postvid'}), this.props.settings.playDuration);
+    setTimeout(
+      this.setState.bind(this, {section: 'postvid'}),
+      this.props.settings.playDuration * 60000
+    );
   }
 
   render () {
