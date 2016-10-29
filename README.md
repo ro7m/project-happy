@@ -39,3 +39,4 @@ npm run build && git push
 - [x] options for directing after-video activities
 - [x] options for before-video activities
 - [x] switch to react for ease of maintenance while still user-experimenting
+- [ ] videos bookmarking feature
