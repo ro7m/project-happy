@@ -22,6 +22,7 @@ class SearchResult extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
+    if ( this.props.lastQuery === nextProps.lastQuery ) return;
     this.data.q = nextProps.lastQuery;
     this.data.pageToken = null;
     this.setState({ results: null });
