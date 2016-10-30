@@ -36,7 +36,11 @@ class SettingsPopUp extends React.Component {
   }
 
   open () {
-    this.setState({ showModal: true });
+    this.setState({
+      showModal: true,
+      showPrevid: this.props.previd !== null,
+      settings: JSON.parse(JSON.stringify(this.props))
+    });
   }
 
   showPrevid () {
