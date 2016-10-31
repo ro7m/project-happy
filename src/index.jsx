@@ -26,7 +26,6 @@ class App extends React.Component {
 
   updateSettings (newSettings) {
     this.setState({ settings: newSettings });
-    this.forceUpdate();
     localStorage.setItem('settings', JSON.stringify(newSettings));
   }
 
