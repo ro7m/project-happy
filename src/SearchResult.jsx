@@ -38,8 +38,9 @@ class SearchResult extends React.Component {
     axios({
       url: 'https://www.googleapis.com/youtube/v3/search',
       method: 'get',
-      data: this.data
+      params: this.data
     }).then(res => {
+      res = res.data;
       this.data.pageToken = res.nextPageToken;
       this.setState({
         loading: false,
@@ -58,8 +59,9 @@ class SearchResult extends React.Component {
     axios({
       url: 'https://www.googleapis.com/youtube/v3/search',
       method: 'get',
-      data: this.data
+      params: this.data
     }).then(res => {
+      res = res.data;
       this.data.pageToken = res.nextPageToken;
       this.setState({
         loading: false,
