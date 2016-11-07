@@ -1,7 +1,7 @@
 import React from 'react';
 import Grid from 'react-bootstrap/lib/Grid';
 import Button from 'react-bootstrap/lib/Button';
-import $ from 'jquery';
+import axios from 'axios';
 
 import Spinner from './Spinner.jsx';
 import SearchResultItem from './SearchResultItem.jsx';
@@ -35,17 +35,17 @@ class SearchResult extends React.Component {
   }
 
   performSearch () {
-    $.ajax({
+    axios({
       url: 'https://www.googleapis.com/youtube/v3/search',
-      type: 'GET',
+      method: 'get',
       data: this.data
-    }).done(res => {
+    }).then(res => {
       this.data.pageToken = res.nextPageToken;
       this.setState({
         loading: false,
         results: res.items
       });
-    }).fail( () => {
+    }).catch( () => {
       this.setState({
         loading: false,
         results: 'error'
@@ -55,17 +55,17 @@ class SearchResult extends React.Component {
 
   loadMoreResults () {
     this.setState({ loading: true });
-    $.ajax({
+    axios({
       url: 'https://www.googleapis.com/youtube/v3/search',
-      type: 'GET',
+      method: 'get',
       data: this.data
-    }).done(res => {
+    }).then(res => {
       this.data.pageToken = res.nextPageToken;
       this.setState({
         loading: false,
         results: this.state.results.concat(res.items)
       });
-    }).fail( () => {
+    }).catch( () => {
       this.setState({
         loading: false,
         results: this.state.results
