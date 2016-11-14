@@ -20,7 +20,7 @@ class SearchResultItem extends React.Component {
           <p>{this.props.description}</p>
         </Col>
       </Row>
-    )
+    );
   }
 }
 

@@ -56,7 +56,7 @@ class SettingsPopUp extends React.Component {
       newSettings.previd = {
         activity: 'Draw',
         duration: 2
-      }
+      };
       this.setState({
         showPrevid: true,
         settings: newSettings
@@ -162,7 +162,7 @@ class SettingsPopUp extends React.Component {
                       </div>
                     );
                   } else {
-                    return "";
+                    return '';
                   }
                 })()
               }
@@ -222,7 +222,7 @@ class SettingsPopUp extends React.Component {
           </form>
         </Modal>
       </div>
-    )
+    );
   }
 }
 

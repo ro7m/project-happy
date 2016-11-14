@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from 'react-bootstrap/lib/Navbar';
 
 import SearchBox from './SearchBox.jsx';
-import SettingsPopUp from './SettingsPopUp.jsx'
+import SettingsPopUp from './SettingsPopUp.jsx';
 
 class NavigationBar extends React.Component {
   constructor (props) {
@@ -18,7 +18,7 @@ class NavigationBar extends React.Component {
         <SearchBox {...this.props} updateSettings={this.props.updateSettings} />
         <SettingsPopUp {...this.props} updateSettings={this.props.updateSettings} />
       </Navbar>
-    )
+    );
   }
 }
 

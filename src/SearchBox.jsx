@@ -46,7 +46,7 @@ class SearchBox extends React.Component {
         </FormGroup>
         </form>
       </Navbar.Form>
-    )
+    );
   }
 }
 

@@ -18,7 +18,7 @@ class App extends React.Component {
           activity: 'Go Home'
         },
         lastQuery: null
-      }
+      };
       localStorage.setItem('settings', JSON.stringify(this.state.settings));
     }
     this.state.playing = null;
@@ -30,7 +30,7 @@ class App extends React.Component {
   }
 
   startPlaying (videoId) {
-    this.setState({ playing: videoId })
+    this.setState({ playing: videoId });
   }
 
   render () {
@@ -40,7 +40,7 @@ class App extends React.Component {
         <NavigationBar {...this.state.settings} updateSettings={this.updateSettings.bind(this)} />
         <SearchResult lastQuery={this.state.settings.lastQuery} startPlaying={this.startPlaying.bind(this)} />
       </div>
-    )
+    );
   }
 }
 

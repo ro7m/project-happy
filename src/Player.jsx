@@ -1,3 +1,4 @@
+/*global YT:true */
 import React from 'react';
 import Grid from 'react-bootstrap/lib/Grid';
 
@@ -11,7 +12,7 @@ class Player extends React.Component {
       videoId: this.props.videoId,
       playerVars: {autoplay: 1, loop: 1, playlist: this.props.videoId},
       events: {
-          'onReady': this.props.countDownToPostvid.bind(this)
+        'onReady': this.props.countDownToPostvid.bind(this)
       }
     });
   }

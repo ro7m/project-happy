@@ -7,20 +7,20 @@ class Screening extends React.Component {
     super(props);
     if ( this.props.settings.previd ) {
       switch ( this.props.settings.previd.activity ) {
-        case 'Draw':
-          this.imgUrl = 'public/img/drawing.jpg';
-          break;
-        case 'Eat Snack':
-          this.imgUrl = 'public/img/snack-time.jpg';
-          break;
-        case 'Francis':
-          this.imgUrl = 'public/img/francis.jpg';
-          break;
-        case 'Schedule':
-          this.imgUrl = 'public/img/schedule.jpeg';
-          break;
-        default:
-          break;
+      case 'Draw':
+        this.imgUrl = 'public/img/drawing.jpg';
+        break;
+      case 'Eat Snack':
+        this.imgUrl = 'public/img/snack-time.jpg';
+        break;
+      case 'Francis':
+        this.imgUrl = 'public/img/francis.jpg';
+        break;
+      case 'Schedule':
+        this.imgUrl = 'public/img/schedule.jpeg';
+        break;
+      default:
+        break;
       }
       this.state = { section: 'previd' };
     } else {
@@ -37,24 +37,24 @@ class Screening extends React.Component {
 
   countDownToPostvid () {
     switch ( this.props.settings.postvid.activity ) {
-      case 'Draw':
-        this.imgUrl = 'public/img/drawing.jpg';
-        break;
-      case 'Eat Snack':
-        this.imgUrl = 'public/img/snack-time.jpg';
-        break;
-      case 'Go Home':
-        this.imgUrl = 'public/img/go-home.jpg';
-        break;
-      case 'Francis':
-        this.imgUrl = 'public/img/francis.jpg';
-        break;
-      case 'Schedule':
-        this.imgUrl = 'public/img/schedule.jpeg';
-        break;
-      default:
-        this.imgUrl = 'public/img/go-home.jpg';
-        break;
+    case 'Draw':
+      this.imgUrl = 'public/img/drawing.jpg';
+      break;
+    case 'Eat Snack':
+      this.imgUrl = 'public/img/snack-time.jpg';
+      break;
+    case 'Go Home':
+      this.imgUrl = 'public/img/go-home.jpg';
+      break;
+    case 'Francis':
+      this.imgUrl = 'public/img/francis.jpg';
+      break;
+    case 'Schedule':
+      this.imgUrl = 'public/img/schedule.jpeg';
+      break;
+    default:
+      this.imgUrl = 'public/img/go-home.jpg';
+      break;
     }
     setTimeout(
       this.setState.bind(this, {section: 'postvid'}),

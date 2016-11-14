@@ -18,7 +18,7 @@ class SearchResult extends React.Component {
       q: this.props.lastQuery,
       videoDimension: '2d',
       videoEmbeddable: 'true'
-    }
+    };
   }
 
   componentWillReceiveProps (nextProps) {
@@ -39,7 +39,7 @@ class SearchResult extends React.Component {
       url: 'https://www.googleapis.com/youtube/v3/search',
       method: 'get',
       params: this.data
-    }).then(res => {
+    }).then( (res) => {
       res = res.data;
       this.data.pageToken = res.nextPageToken;
       this.setState({
@@ -60,7 +60,7 @@ class SearchResult extends React.Component {
       url: 'https://www.googleapis.com/youtube/v3/search',
       method: 'get',
       params: this.data
-    }).then(res => {
+    }).then( (res) => {
       res = res.data;
       this.data.pageToken = res.nextPageToken;
       this.setState({
@@ -82,7 +82,7 @@ class SearchResult extends React.Component {
     return (
       <Grid id="results">
         {
-          this.state.results.map(item => {
+          this.state.results.map( (item) => {
             return (
               <SearchResultItem
                 key={item.id.videoId}
