@@ -28,7 +28,7 @@
             "single"
         ],
         "semi": [
-            "error",
+            "warn",
             "always"
         ]
     }

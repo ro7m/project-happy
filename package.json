@@ -30,6 +30,8 @@
     "react": "^15.3.2",
     "react-bootstrap": "^0.30.5",
     "react-dom": "^15.3.2",
+    "react-redux": "^4.4.6",
+    "redux": "^3.6.0",
     "youtube-iframe": "^1.0.3"
   },
   "devDependencies": {
