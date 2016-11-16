@@ -3,7 +3,7 @@ import createStore from 'redux/lib/createStore';
 import rootReducer from './reducers/index';
 
 const defaultState = {
-  settings: JSON.parse(localStorage.settings) || {
+  settings: {
     previd: null,
     playDuration: 2,
     postvid: {
@@ -14,7 +14,7 @@ const defaultState = {
   playing: null
 };
 
-console.log('default', defaultState);
+if (localStorage.settings) defaultState.settings = JSON.parse(localStorage.settings);
 
 const store = createStore(rootReducer, defaultState);
 

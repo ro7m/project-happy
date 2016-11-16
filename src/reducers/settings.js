@@ -1,6 +1,11 @@
 function settings(state={}, action) {
-  console.log(state, action);
-  return state;
+  switch (action.type) {
+  case 'UPDATE_SETTINGS':
+    localStorage.setItem('settings', JSON.stringify(action.newSettings));
+    return action.newSettings;
+  default:
+    return state;
+  }
 }
 
 export default settings;
