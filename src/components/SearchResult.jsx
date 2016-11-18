@@ -30,8 +30,8 @@ class SearchResult extends React.Component {
   }
 
   componentDidMount () {
-    if ( !this.props.lastQuery ) return;
-    this.performSearch();
+    if ( !localStorage.lastQuery ) return;
+    else this.props.searchVideos(localStorage.lastQuery);
   }
 
   performSearch () {
@@ -76,24 +76,25 @@ class SearchResult extends React.Component {
   }
 
   render () {
-    if ( !this.props.lastQuery ) return (<h4 className="text-center">Start by searching for videos</h4>);
-    else if ( !this.state.results ) return <Spinner />;
-    else if ( this.state.results === 'error' ) return (<h4 className="text-center">There was an error! Please try again</h4>);
+    let { status, error, results } = this.props.search;
+
+    if ( status === 'new' ) return (<h4 className="text-center">Start by searching for videos</h4>);
+    else if ( status === 'loading' ) return <Spinner />;
+    else if ( status === 'error' ) return (<h4 className="text-center">{error.toString()}! Please try again</h4>);
     return (
       <Grid id="results">
         {
-          this.state.results.map( (item) => {
+          results.items.map( (item) => {
             return (
               <SearchResultItem
                 key={item.id.videoId}
                 id={item.id.videoId}
                 {...item.snippet}
-                startPlaying={this.props.startPlaying.bind(this, item.id.videoId)}
                 />
             );
           })
         }
-        {( this.state.loading ) ? (<Spinner />) : <Button className="center-block" onClick={this.loadMoreResults}>Load More Videos...</Button>}
+        {( status === 'load-more' ) ? (<Spinner />) : <Button className="center-block" onClick={this.loadMoreResults}>Load More Videos...</Button>}
       </Grid>
     );
   }

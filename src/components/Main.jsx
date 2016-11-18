@@ -14,7 +14,7 @@ class Main extends React.Component {
     return (
       <div>
         <NavigationBar {...this.props} />
-        <SearchResult lastQuery={this.props.settings.lastQuery} startPlaying={this.startPlaying.bind(this)} />
+        <SearchResult {...this.props} />
       </div>
     );
   }
