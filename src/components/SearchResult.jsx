@@ -1,7 +1,6 @@
 import React from 'react';
 import Grid from 'react-bootstrap/lib/Grid';
 import Button from 'react-bootstrap/lib/Button';
-import axios from 'axios';
 
 import Spinner from './Spinner.jsx';
 import SearchResultItem from './SearchResultItem.jsx';
@@ -9,70 +8,11 @@ import SearchResultItem from './SearchResultItem.jsx';
 class SearchResult extends React.Component {
   constructor (props) {
     super(props);
-    this.state = { results: null };
-    this.loadMoreResults = this.loadMoreResults.bind(this);
-    this.data = {
-      key: 'AIzaSyDZYAKp1cVowIRmnV4jXh_C2x0vDVLHvYU',
-      part: 'snippet',
-      type: 'video',
-      q: this.props.lastQuery,
-      videoDimension: '2d',
-      videoEmbeddable: 'true'
-    };
-  }
-
-  componentWillReceiveProps (nextProps) {
-    if ( this.props.lastQuery === nextProps.lastQuery ) return;
-    this.data.q = nextProps.lastQuery;
-    this.data.pageToken = null;
-    this.setState({ results: null });
-    this.performSearch();
   }
 
   componentDidMount () {
     if ( !localStorage.lastQuery ) return;
     else this.props.searchVideos(localStorage.lastQuery);
-  }
-
-  performSearch () {
-    axios({
-      url: 'https://www.googleapis.com/youtube/v3/search',
-      method: 'get',
-      params: this.data
-    }).then( (res) => {
-      res = res.data;
-      this.data.pageToken = res.nextPageToken;
-      this.setState({
-        loading: false,
-        results: res.items
-      });
-    }).catch( () => {
-      this.setState({
-        loading: false,
-        results: 'error'
-      });
-    });
-  }
-
-  loadMoreResults () {
-    this.setState({ loading: true });
-    axios({
-      url: 'https://www.googleapis.com/youtube/v3/search',
-      method: 'get',
-      params: this.data
-    }).then( (res) => {
-      res = res.data;
-      this.data.pageToken = res.nextPageToken;
-      this.setState({
-        loading: false,
-        results: this.state.results.concat(res.items)
-      });
-    }).catch( () => {
-      this.setState({
-        loading: false,
-        results: this.state.results
-      });
-    });
   }
 
   render () {
@@ -94,7 +34,11 @@ class SearchResult extends React.Component {
             );
           })
         }
-        {( status === 'load-more' ) ? (<Spinner />) : <Button className="center-block" onClick={this.loadMoreResults}>Load More Videos...</Button>}
+        {
+          ( status === 'load-more' ) ?
+          <Spinner /> :
+          <Button className="center-block" onClick={this.props.loadMoreVideos}>Load More Videos...</Button>
+        }
       </Grid>
     );
   }
