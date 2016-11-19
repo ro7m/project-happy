@@ -9,7 +9,7 @@ function mapStateToProps(state) {
   return {
     settings: state.settings,
     search: state.search,
-    playing: state.playing
+    screening: state.screening
   };
 }
 

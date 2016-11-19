@@ -2,12 +2,12 @@ import combineReducers from 'redux/lib/combineReducers';
 
 import search from './search';
 import settings from './settings';
-import playing from './playing';
+import screening from './screening';
 
 const rootReducer = combineReducers({
   search,
   settings,
-  playing
+  screening
 });
 
 export default rootReducer;

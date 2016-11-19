@@ -30,6 +30,7 @@ class SearchResult extends React.Component {
                 key={item.id.videoId}
                 id={item.id.videoId}
                 {...item.snippet}
+                startScreening={() => this.props.startScreening(item.id.videoId)}
                 />
             );
           })

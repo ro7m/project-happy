@@ -10,7 +10,7 @@ class Main extends React.Component {
   }
 
   render () {
-    if ( this.props.playing ) return <Screening {...this.state} />;
+    if ( this.props.screening ) return <Screening {...this.props} />;
     return (
       <div>
         <NavigationBar {...this.props} />

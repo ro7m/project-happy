@@ -82,9 +82,47 @@ export function displayExtraResults(isLoading, error, results) {
   };
 }
 
+export function startScreening(videoId) {
+  return function(dispatch, getState) {
+    let state = getState();
+    let { previd, postvid, playDuration } = state.settings;
+
+    if (previd) {
+      dispatch(displayImage(previd.activity));
+      setTimeout( () => {
+        dispatch(playVideo(videoId));
+        setTimeout( () => {
+          dispatch(displayImage(postvid.activity));
+        }, playDuration * 60000);
+      }, previd.duration * 60000);
+    } else {
+      dispatch(playVideo(videoId));
+      setTimeout( () => {
+        dispatch(displayImage(postvid.activity));
+      }, playDuration * 60000);
+    }
+  };
+}
+
+export function displayImage(activity) {
+  const imgUrlLib = {
+    'Draw': 'public/img/drawing.jpg',
+    'Eat Snack': 'public/img/snack-time.jpg',
+    'Francis': 'public/img/francis.jpg',
+    'Schedule': 'public/img/schedule.jpeg',
+    'Go Home': 'public/img/go-home.jpg'
+  };
+
+  let url = imgUrlLib[activity];
+  return {
+    type: 'DISPLAY_IMAGE',
+    url
+  };
+}
+
 export function playVideo(videoId) {
   return {
-    type: 'PLAY',
+    type: 'PLAY_VIDEO',
     videoId
   };
 }

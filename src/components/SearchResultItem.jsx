@@ -4,13 +4,9 @@ import Col from 'react-bootstrap/lib/Col';
 import Image from 'react-bootstrap/lib/Image';
 
 class SearchResultItem extends React.Component {
-  constructor (props) {
-    super(props);
-  }
-
   render () {
     return (
-      <Row className="result" onClick={this.props.startPlaying}>
+      <Row className="result" onClick={this.props.startScreening}>
         <Col xs={12} sm={3}>
           <Image responsive src={this.props.thumbnails.medium.url} />
         </Col>
