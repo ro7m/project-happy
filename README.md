@@ -39,6 +39,6 @@ npm run build && git push
 - [x] options for directing after-video activities
 - [x] options for before-video activities
 - [x] switch to react for ease of maintenance while still user-experimenting
-- [ ] Redux for a better architecture
+- [x] Redux for a better architecture
 - [ ] transform into progressive web app to eliminate address bar (a possible distraction for the kid)
 - [ ] videos bookmarking feature

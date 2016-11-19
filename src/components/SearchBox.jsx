@@ -20,10 +20,8 @@ class SearchBox extends React.Component {
 
   onSearchSubmission (event) {
     event.preventDefault();
-    if ( this.state.query === '' ) return;
-    let newSettings = JSON.parse( JSON.stringify(this.props) );
-    newSettings.lastQuery = this.state.query;
-    this.props.updateSettings(newSettings);
+    let term = this.state.query;
+    this.props.searchVideos(term);
   }
 
   render () {

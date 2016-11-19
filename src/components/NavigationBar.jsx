@@ -15,8 +15,8 @@ class NavigationBar extends React.Component {
         <Navbar.Header>
           <a href="/"><img className="navbar-img img-responsive" src="public/img/logo.jpeg" /></a>
         </Navbar.Header>
-        <SearchBox {...this.props} updateSettings={this.props.updateSettings} />
-        <SettingsPopUp {...this.props} updateSettings={this.props.updateSettings} />
+        <SearchBox {...this.props} />
+        <SettingsPopUp {...this.props} />
       </Navbar>
     );
   }

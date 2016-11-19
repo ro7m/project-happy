@@ -11,35 +11,33 @@ import Button from 'react-bootstrap/lib/Button';
 import Modal from 'react-bootstrap/lib/Modal';
 
 class SettingsPopUp extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
       showModal: false,
-      showPrevid: this.props.previd !== null,
-      settings: JSON.parse(JSON.stringify(this.props))
+      showPrevid: this.props.settings.previd !== null,
+      settings: JSON.parse(JSON.stringify(props.settings))
     };
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
     this.showPrevid = this.showPrevid.bind(this);
+    this.onPlayDurationChange = this.onPlayDurationChange.bind(this);
     this.onPrevidActivityChange = this.onPrevidActivityChange.bind(this);
     this.onPrevidDurationChange = this.onPrevidDurationChange.bind(this);
-    this.onPlayDurationChange = this.onPlayDurationChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   close () {
     this.setState({
       showModal: false,
-      showPrevid: this.props.previd !== null,
-      settings: JSON.parse(JSON.stringify(this.props))
+      showPrevid: this.props.settings.previd !== null,
+      settings: JSON.parse(JSON.stringify(this.props.settings))
     });
   }
 
   open () {
     this.setState({
       showModal: true,
-      showPrevid: this.props.previd !== null,
-      settings: JSON.parse(JSON.stringify(this.props))
     });
   }
 
