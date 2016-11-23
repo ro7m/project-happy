@@ -13,7 +13,7 @@ class NavigationBar extends React.Component {
     return (
       <Navbar fluid={true}>
         <Navbar.Header>
-          <a href="/"><img className="navbar-img img-responsive" src="public/img/logo.jpeg" /></a>
+          <a href="#"><img className="navbar-img img-responsive" src="public/img/logo.jpeg" /></a>
         </Navbar.Header>
         <SearchBox {...this.props} />
         <SettingsPopUp {...this.props} />
