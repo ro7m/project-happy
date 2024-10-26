@@ -29,15 +29,10 @@ jobs:
           echo "Root directory contents after build:"
           ls -al
 
-      - name: Check public directory
-        run: |
-          echo "Contents of public directory:"
-          ls -al ./public
-
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public # Points to the correct output directory
+          publish_dir: . # Points to the correct output directory
           publish_branch: gh-pages
           force_orphan: true
