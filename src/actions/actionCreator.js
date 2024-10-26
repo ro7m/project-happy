@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export function updateSettings(newSettings) {
   return {
     type: 'UPDATE_SETTINGS',
@@ -8,16 +10,41 @@ export function updateSettings(newSettings) {
 export function searchVideos(searchTerm) {
   return function(dispatch) {
     dispatch(displayResults(true));
-    // Store the search term in local storage as before
-    localStorage.setItem('lastQuery', searchTerm);
-    
-    // Instead of calling the YouTube API, we update state with the embedded URL
-    const results = {
-      query: searchTerm,
-      embedUrl: `https://www.youtube.com/results?search_query=${encodeURIComponent(searchTerm)}`
-    };
-    
-    dispatch(displayResults(false, null, results));
+    axios({
+      url: 'https://invidious.snopyta.org/api/v1/search',
+      method: 'get',
+      params: {
+        q: searchTerm,
+        type: 'video',
+        sort_by: 'relevance',
+        page: 1
+      }
+    }).then((res) => {
+      localStorage.setItem('lastQuery', searchTerm);
+      // Transform the Invidious response to match YouTube API format
+      const transformedItems = res.data.map(item => ({
+        id: { videoId: item.videoId },
+        snippet: {
+          title: item.title,
+          description: item.description,
+          thumbnails: {
+            default: { url: item.videoThumbnails[0].url },
+            medium: { url: item.videoThumbnails[4].url },
+            high: { url: item.videoThumbnails[2].url }
+          },
+          channelTitle: item.author
+        }
+      }));
+      
+      let results = {
+        query: searchTerm,
+        nextPageToken: '2', // Invidious uses page numbers instead of tokens
+        items: transformedItems
+      };
+      dispatch(displayResults(false, null, results));
+    }).catch((err) => {
+      dispatch(displayResults(false, err));
+    });
   };
 }
 
@@ -32,17 +59,44 @@ export function displayResults(isLoading, error, results) {
 
 export function loadMoreVideos() {
   return function(dispatch, getState) {
-    // For embedding, we can simply reuse the original search term
     let state = getState().search;
-    dispatch(displayExtraResults(true));
+    const currentPage = parseInt(state.results.nextPageToken) || 1;
     
-    // Embed URL remains the same, with no new pageToken parameter
-    const results = {
-      query: state.results.query,
-      embedUrl: `https://www.youtube.com/results?search_query=${encodeURIComponent(state.results.query)}`
-    };
+    dispatch(displayExtraResults(true));
+    axios({
+      url: 'https://invidious.snopyta.org/api/v1/search',
+      method: 'get',
+      params: {
+        q: state.results.query,
+        type: 'video',
+        sort_by: 'relevance',
+        page: currentPage
+      }
+    }).then((res) => {
+      // Transform the Invidious response to match YouTube API format
+      const transformedItems = res.data.map(item => ({
+        id: { videoId: item.videoId },
+        snippet: {
+          title: item.title,
+          description: item.description,
+          thumbnails: {
+            default: { url: item.videoThumbnails[0].url },
+            medium: { url: item.videoThumbnails[4].url },
+            high: { url: item.videoThumbnails[2].url }
+          },
+          channelTitle: item.author
+        }
+      }));
 
-    dispatch(displayExtraResults(false, null, results));
+      let results = {
+        query: state.results.query,
+        nextPageToken: (currentPage + 1).toString(),
+        items: transformedItems
+      };
+      dispatch(displayExtraResults(false, null, results));
+    }).catch((err) => {
+      dispatch(displayExtraResults(false, err));
+    });
   };
 }
 
@@ -94,10 +148,8 @@ export function displayImage(activity) {
 }
 
 export function playVideo(videoId) {
-  // Update to use embedded video URL with iframe
-  const embedUrl = `https://www.youtube.com/embed/${videoId}`;
   return {
     type: 'PLAY_VIDEO',
-    embedUrl
+    videoId
   };
 }
