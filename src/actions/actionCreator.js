@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 export function updateSettings(newSettings) {
   return {
     type: 'UPDATE_SETTINGS',
@@ -10,28 +8,16 @@ export function updateSettings(newSettings) {
 export function searchVideos(searchTerm) {
   return function(dispatch) {
     dispatch(displayResults(true));
-    axios({
-      url: 'https://www.googleapis.com/youtube/v3/search',
-      method: 'get',
-      params: {
-        key: 'AIzaSyDZYAKp1cVowIRmnV4jXh_C2x0vDVLHvYU',
-        part: 'snippet',
-        type: 'video',
-        q: searchTerm,
-        videoDimension: '2d',
-        videoEmbeddable: 'true'
-      }
-    }).then( (res) => {
-      localStorage.setItem('lastQuery', searchTerm);
-      let results = {
-        query: searchTerm,
-        nextPageToken: res.data.nextPageToken,
-        items: res.data.items
-      };
-      dispatch(displayResults(false, null, results));
-    }).catch( (err) => {
-      dispatch(displayResults(false, err));
-    });
+    // Store the search term in local storage as before
+    localStorage.setItem('lastQuery', searchTerm);
+    
+    // Instead of calling the YouTube API, we update state with the embedded URL
+    const results = {
+      query: searchTerm,
+      embedUrl: `https://www.youtube.com/results?search_query=${encodeURIComponent(searchTerm)}`
+    };
+    
+    dispatch(displayResults(false, null, results));
   };
 }
 
@@ -46,30 +32,17 @@ export function displayResults(isLoading, error, results) {
 
 export function loadMoreVideos() {
   return function(dispatch, getState) {
+    // For embedding, we can simply reuse the original search term
     let state = getState().search;
     dispatch(displayExtraResults(true));
-    axios({
-      url: 'https://www.googleapis.com/youtube/v3/search',
-      method: 'get',
-      params: {
-        key: 'AIzaSyDZYAKp1cVowIRmnV4jXh_C2x0vDVLHvYU',
-        part: 'snippet',
-        type: 'video',
-        q: state.results.query,
-        videoDimension: '2d',
-        videoEmbeddable: 'true',
-        pageToken: state.results.nextPageToken
-      }
-    }).then( (res) => {
-      let results = {
-        query: state.results.query,
-        nextPageToken: res.data.nextPageToken,
-        items: res.data.items
-      };
-      dispatch(displayExtraResults(false, null, results));
-    }).catch( (err) => {
-      dispatch(displayExtraResults(false, err));
-    });
+    
+    // Embed URL remains the same, with no new pageToken parameter
+    const results = {
+      query: state.results.query,
+      embedUrl: `https://www.youtube.com/results?search_query=${encodeURIComponent(state.results.query)}`
+    };
+
+    dispatch(displayExtraResults(false, null, results));
   };
 }
 
@@ -89,15 +62,15 @@ export function startScreening(videoId) {
 
     if (previd) {
       dispatch(displayImage(previd.activity));
-      setTimeout( () => {
+      setTimeout(() => {
         dispatch(playVideo(videoId));
-        setTimeout( () => {
+        setTimeout(() => {
           dispatch(displayImage(postvid.activity));
         }, playDuration * 60000);
       }, previd.duration * 60000);
     } else {
       dispatch(playVideo(videoId));
-      setTimeout( () => {
+      setTimeout(() => {
         dispatch(displayImage(postvid.activity));
       }, playDuration * 60000);
     }
@@ -121,8 +94,10 @@ export function displayImage(activity) {
 }
 
 export function playVideo(videoId) {
+  // Update to use embedded video URL with iframe
+  const embedUrl = `https://www.youtube.com/embed/${videoId}`;
   return {
     type: 'PLAY_VIDEO',
-    videoId
+    embedUrl
   };
 }
