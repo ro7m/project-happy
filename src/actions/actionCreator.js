@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const PIPED_INSTANCE = 'https://pipedapi.kavin.rocks'; // This instance supports CORS
+
 export function updateSettings(newSettings) {
   return {
     type: 'UPDATE_SETTINGS',
@@ -11,38 +13,39 @@ export function searchVideos(searchTerm) {
   return function(dispatch) {
     dispatch(displayResults(true));
     axios({
-      url: 'https://invidious.snopyta.org/api/v1/search',
+      url: `${PIPED_INSTANCE}/search`,
       method: 'get',
       params: {
         q: searchTerm,
-        type: 'video',
-        sort_by: 'relevance',
-        page: 1
+        filter: 'videos'
       }
     }).then((res) => {
       localStorage.setItem('lastQuery', searchTerm);
-      // Transform the Invidious response to match YouTube API format
-      const transformedItems = res.data.map(item => ({
-        id: { videoId: item.videoId },
-        snippet: {
-          title: item.title,
-          description: item.description,
-          thumbnails: {
-            default: { url: item.videoThumbnails[0].url },
-            medium: { url: item.videoThumbnails[4].url },
-            high: { url: item.videoThumbnails[2].url }
-          },
-          channelTitle: item.author
-        }
-      }));
+      // Transform the Piped response to match YouTube API format
+      const transformedItems = res.data.items
+        .filter(item => item.type === 'stream')
+        .map(item => ({
+          id: { videoId: item.url.split('watch?v=')[1] },
+          snippet: {
+            title: item.title,
+            description: item.description || '',
+            thumbnails: {
+              default: { url: item.thumbnail },
+              medium: { url: item.thumbnail },
+              high: { url: item.thumbnail }
+            },
+            channelTitle: item.uploaderName
+          }
+        }));
       
       let results = {
         query: searchTerm,
-        nextPageToken: '2', // Invidious uses page numbers instead of tokens
+        nextPageToken: '2',
         items: transformedItems
       };
       dispatch(displayResults(false, null, results));
     }).catch((err) => {
+      console.error('Search error:', err);
       dispatch(displayResults(false, err));
     });
   };
@@ -64,29 +67,29 @@ export function loadMoreVideos() {
     
     dispatch(displayExtraResults(true));
     axios({
-      url: 'https://invidious.snopyta.org/api/v1/search',
+      url: `${PIPED_INSTANCE}/search`,
       method: 'get',
       params: {
         q: state.results.query,
-        type: 'video',
-        sort_by: 'relevance',
-        page: currentPage
+        filter: 'videos'
       }
     }).then((res) => {
-      // Transform the Invidious response to match YouTube API format
-      const transformedItems = res.data.map(item => ({
-        id: { videoId: item.videoId },
-        snippet: {
-          title: item.title,
-          description: item.description,
-          thumbnails: {
-            default: { url: item.videoThumbnails[0].url },
-            medium: { url: item.videoThumbnails[4].url },
-            high: { url: item.videoThumbnails[2].url }
-          },
-          channelTitle: item.author
-        }
-      }));
+      // Transform the Piped response to match YouTube API format
+      const transformedItems = res.data.items
+        .filter(item => item.type === 'stream')
+        .map(item => ({
+          id: { videoId: item.url.split('watch?v=')[1] },
+          snippet: {
+            title: item.title,
+            description: item.description || '',
+            thumbnails: {
+              default: { url: item.thumbnail },
+              medium: { url: item.thumbnail },
+              high: { url: item.thumbnail }
+            },
+            channelTitle: item.uploaderName
+          }
+        }));
 
       let results = {
         query: state.results.query,
@@ -95,6 +98,7 @@ export function loadMoreVideos() {
       };
       dispatch(displayExtraResults(false, null, results));
     }).catch((err) => {
+      console.error('Load more error:', err);
       dispatch(displayExtraResults(false, err));
     });
   };
