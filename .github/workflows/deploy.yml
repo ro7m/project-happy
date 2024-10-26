@@ -3,7 +3,7 @@ name: Build and Deploy to GitHub Pages
 on:
   push:
     branches:
-      - master # Adjust if you're using a different branch
+      - master # Adjust if using a different branch
 
 jobs:
   build:
@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20' # Adjust as necessary
+          node-version: '16' # Adjust if necessary
 
       - name: Install dependencies
         run: npm install
@@ -24,15 +24,20 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Check build directory
+      - name: List root directory contents
         run: |
-          echo "Listing build directory contents..."
-          ls -al ./build # Verifies if the build directory has content
+          echo "Root directory contents after build:"
+          ls -al
+
+      - name: Check public directory
+        run: |
+          echo "Contents of public directory:"
+          ls -al ./public
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+          publish_dir: ./public # Points to the correct output directory
           publish_branch: gh-pages
           force_orphan: true
