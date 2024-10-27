@@ -187,28 +187,28 @@ class SettingsPopUp extends React.Component {
                   value="Eat Snack"
                   name="directed-action"
                   checked={this.state.settings.postvid.activity === 'Eat Snack'}
-                  onChange={() => this.onPostvidActivityChange('Eat Snack')} >
+                  onChange={() => this.onPostvidActivityChange('Go Home')} >
                   <span  className="btn btn-default">Eat Snack</span>
                 </Radio>
                 <Radio inline
                   value="Draw"
                   name="directed-action"
                   checked={this.state.settings.postvid.activity === 'Draw'}
-                  onChange={() => this.onPostvidActivityChange('Draw')} >
+                  onChange={() => this.onPostvidActivityChange('Go Home')} >
                   <span className="btn btn-default">Draw</span>
                 </Radio>
                 <Radio inline
                   value="Francis"
                   name="directed-action"
                   checked={this.state.settings.postvid.activity === 'Francis'}
-                  onChange={() => this.onPostvidActivityChange('Francis')} >
+                  onChange={() => this.onPostvidActivityChange('Go Home')} >
                   <span className="btn btn-default">Francis</span>
                 </Radio>
                 <Radio inline
                   value="Schedule"
                   name="directed-action"
                   checked={this.state.settings.postvid.activity === 'Schedule'}
-                  onChange={() => this.onPostvidActivityChange('Schedule')} >
+                  onChange={() => this.onPostvidActivityChange('Go Home')} >
                   <span className="btn btn-default">Schedule</span>
                 </Radio>
               </FormGroup>
