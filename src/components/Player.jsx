@@ -6,7 +6,7 @@ class Player extends React.Component {
   componentDidMount () {
     this.player =  new YT.Player('video-screening', {
       videoId: this.props.videoId,
-      playerVars: {autoplay: 1, loop: 1, playlist: this.props.videoId}
+      playerVars: {autoplay: 1, loop: 0, playlist: this.props.videoId}
     });
   }
 
