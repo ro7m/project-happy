@@ -3,7 +3,7 @@ import React from 'react';
 import NavigationBar from './NavigationBar.jsx';
 import SearchResult from './SearchResult.jsx';
 import Screening from './Screening.jsx';
-import { initializeLockState } from './actions';
+import { initializeLockState } from '../actions';
 
 class Main extends React.Component {
   
