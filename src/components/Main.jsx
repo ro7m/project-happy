@@ -3,8 +3,14 @@ import React from 'react';
 import NavigationBar from './NavigationBar.jsx';
 import SearchResult from './SearchResult.jsx';
 import Screening from './Screening.jsx';
+import { initializeLockState } from './actions';
 
 class Main extends React.Component {
+  
+  componentDidMount() {
+    this.props.dispatch(initializeLockState());
+  }
+  
   startPlaying (videoId) {
     this.setState({ playing: videoId });
   }
