@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const PIPED_INSTANCE = 'https://pipedapi.kavin.rocks'; // This instance supports CORS
+const PIPED_INSTANCE = 'https://pipedapi.kavin.rocks';
+const LOCK_DURATION = 5 * 60 * 1000; // 5 minutes in milliseconds
 
 export function updateSettings(newSettings) {
   return {
@@ -9,8 +10,25 @@ export function updateSettings(newSettings) {
   };
 }
 
+export function lockApp() {
+  return {
+    type: 'LOCK_APP'
+  };
+}
+
+export function unlockApp() {
+  return {
+    type: 'UNLOCK_APP'
+  };
+}
+
 export function searchVideos(searchTerm) {
-  return function(dispatch) {
+  return function(dispatch, getState) {
+    const state = getState();
+    if (state.app.isLocked) {
+      return; // Don't allow search while app is locked
+    }
+
     dispatch(displayResults(true));
     axios({
       url: `${PIPED_INSTANCE}/search`,
@@ -21,7 +39,6 @@ export function searchVideos(searchTerm) {
       }
     }).then((res) => {
       localStorage.setItem('lastQuery', searchTerm);
-      // Transform the Piped response to match YouTube API format
       const transformedItems = res.data.items
         .filter(item => item.type === 'stream')
         .map(item => ({
@@ -62,19 +79,22 @@ export function displayResults(isLoading, error, results) {
 
 export function loadMoreVideos() {
   return function(dispatch, getState) {
-    let state = getState().search;
-    const currentPage = parseInt(state.results.nextPageToken) || 1;
+    const state = getState();
+    if (state.app.isLocked) {
+      return; // Don't allow loading more while app is locked
+    }
+
+    const currentPage = parseInt(state.search.results.nextPageToken) || 1;
     
     dispatch(displayExtraResults(true));
     axios({
       url: `${PIPED_INSTANCE}/search`,
       method: 'get',
       params: {
-        q: state.results.query,
+        q: state.search.results.query,
         filter: 'videos'
       }
     }).then((res) => {
-      // Transform the Piped response to match YouTube API format
       const transformedItems = res.data.items
         .filter(item => item.type === 'stream')
         .map(item => ({
@@ -92,7 +112,7 @@ export function loadMoreVideos() {
         }));
 
       let results = {
-        query: state.results.query,
+        query: state.search.results.query,
         nextPageToken: (currentPage + 1).toString(),
         items: transformedItems
       };
@@ -115,7 +135,11 @@ export function displayExtraResults(isLoading, error, results) {
 
 export function startScreening(videoId) {
   return function(dispatch, getState) {
-    let state = getState();
+    const state = getState();
+    if (state.app.isLocked) {
+      return; // Don't allow starting new videos while app is locked
+    }
+
     let { previd, postvid, playDuration } = state.settings;
 
     if (previd) {
@@ -124,12 +148,22 @@ export function startScreening(videoId) {
         dispatch(playVideo(videoId));
         setTimeout(() => {
           dispatch(displayImage(postvid.activity));
+          dispatch(lockApp());
+          // Set timer to unlock after 5 minutes
+          setTimeout(() => {
+            dispatch(unlockApp());
+          }, LOCK_DURATION);
         }, playDuration * 60000);
       }, previd.duration * 60000);
     } else {
       dispatch(playVideo(videoId));
       setTimeout(() => {
         dispatch(displayImage(postvid.activity));
+        dispatch(lockApp());
+        // Set timer to unlock after 5 minutes
+        setTimeout(() => {
+          dispatch(unlockApp());
+        }, LOCK_DURATION);
       }, playDuration * 60000);
     }
   };
