@@ -13,8 +13,28 @@ function mapStateToProps(state) {
   };
 }
 
+
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(actionCreator, dispatch);
+}
+
+export function initializeLockState() {
+  return function(dispatch) {
+    // Check if there's an existing lock
+    if (getLockStateFromStorage()) {
+      dispatch(lockApp());
+      // Set up unlock timer
+      const lockData = JSON.parse(localStorage.getItem('appLock'));
+      const timeRemaining = LOCK_DURATION - (Date.now() - lockData.timestamp);
+      if (timeRemaining > 0) {
+        setTimeout(() => {
+          dispatch(unlockApp());
+        }, timeRemaining);
+      } else {
+        dispatch(unlockApp());
+      }
+    }
+  };
 }
 
 const App = connect(mapStateToProps, mapDispatchToProps)(Main);
