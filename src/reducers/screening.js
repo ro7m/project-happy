@@ -10,6 +10,16 @@ function screening(state={}, action) {
         status: 'playing',
         id: action.videoId
       };
+    case 'LOCK_APP':
+      return {
+        ...state,
+        isLocked: true
+      };
+    case 'UNLOCK_APP':
+      return {
+        ...state,
+        isLocked: false
+      };  
     default:
       return state;
   }
