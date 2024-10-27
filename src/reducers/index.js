@@ -8,7 +8,7 @@ const rootReducer = combineReducers({
   search,
   settings,
   screening,
-  lockReducer
+  lock: lockReducer
 });
 
 export default rootReducer;
