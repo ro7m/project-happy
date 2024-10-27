@@ -1,6 +1,6 @@
 {
-  "name": "Project Happy",
-  "short_name": "Happy",
+  "name": "vimiTube",
+  "short_name": "vimiTube",
   "display": "standalone",
   "start_url": "./",
   "theme_color": "#fff",
