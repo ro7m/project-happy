@@ -16,3 +16,5 @@ function lockReducer(state = initialLockState, action) {
       return state;
   }
 }
+
+export default lockReducer;
