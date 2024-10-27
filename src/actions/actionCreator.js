@@ -25,7 +25,7 @@ export function unlockApp() {
 export function searchVideos(searchTerm) {
   return function(dispatch, getState) {
     const state = getState();
-    if (state.lock.isLocked || getLockStateFromStorage()) {
+    if (state.lock.isLocked) {
       return; // Don't allow search while app is locked
     }
 
@@ -136,7 +136,7 @@ export function displayExtraResults(isLoading, error, results) {
 export function startScreening(videoId) {
   return function(dispatch, getState) {
     const state = getState();
-    if (state.lock.isLocked || getLockStateFromStorage()  ) {
+    if (state.lock.isLocked) {
       return; // Don't allow starting new videos while app is locked
     }
 
