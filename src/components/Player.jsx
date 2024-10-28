@@ -2,36 +2,95 @@ import React from 'react';
 import Grid from 'react-bootstrap/lib/Grid';
 
 class Player extends React.Component {
-  componentDidMount () {
+  componentDidMount() {
+    // Initialize the player
     this.player = new YT.Player('video-screening', {
       videoId: this.props.videoId,
       playerVars: {
         autoplay: 0,
-        loop: 0,
-        playlist: this.props.videoId,
-        // Disable elements that could redirect to YouTube
-        modestbranding: 1,    // Minimal YouTube branding
-        rel: 0,              // Disable related videos
-        controls: 1,         // Show video controls
-        showinfo: 0,         // Hide video title and uploader info
-        fs: 1,              // Disable fullscreen button
-        iv_load_policy: 3,   // Disable video annotations
-        disablekb: 1,       // Disable keyboard controls
-        enablejsapi: 1,      // Enable JavaScript API
-        origin: window.location.origin // Specify origin for added security
+        loop: 1,  // Enable loop to prevent end screen
+        playlist: this.props.videoId, // Required for loop to work
+        modestbranding: 1,
+        rel: 0,
+        controls: 1,
+        showinfo: 0,
+        fs: 0,
+        iv_load_policy: 3,
+        disablekb: 1,
+        enablejsapi: 1,
+        origin: window.location.origin,
+        // Additional parameters to restrict YouTube features
+        playsinline: 1,     // Force inline playing
+        cc_load_policy: 0,  // Disable closed captions by default
+        widget_referrer: window.location.origin,
+        embedOptions: {
+          modestBranding: true
+        }
       },
       events: {
+        onReady: (event) => {
+          // Add click interceptor when player is ready
+          this.addClickInterceptor();
+        },
         onStateChange: (event) => {
-          // Prevent video from ending in YouTube redirect
+          // Prevent end screen suggestions
           if (event.data === YT.PlayerState.ENDED) {
-            this.player.stopVideo();
+            // Restart the video instead of showing end screen
+            this.player.playVideo();
+            // Or alternatively:
+            // this.player.seekTo(0);
           }
         }
       }
     });
   }
 
-  render () {
+  addClickInterceptor() {
+    // Add an overlay div to intercept clicks
+    const playerElement = document.getElementById('video-screening');
+    if (playerElement) {
+      const iframe = playerElement.querySelector('iframe');
+      if (iframe) {
+        // Create overlay container
+        const overlayContainer = document.createElement('div');
+        overlayContainer.style.position = 'absolute';
+        overlayContainer.style.top = '0';
+        overlayContainer.style.left = '0';
+        overlayContainer.style.width = '100%';
+        overlayContainer.style.height = '100%';
+        overlayContainer.style.zIndex = '10';
+        overlayContainer.style.cursor = 'pointer';
+
+        // Create play/pause overlay
+        const playOverlay = document.createElement('div');
+        playOverlay.style.width = '100%';
+        playOverlay.style.height = '100%';
+
+        // Add click handler
+        overlayContainer.onclick = (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          if (this.player.getPlayerState() === YT.PlayerState.PLAYING) {
+            this.player.pauseVideo();
+          } else {
+            this.player.playVideo();
+          }
+        };
+
+        // Insert overlay
+        overlayContainer.appendChild(playOverlay);
+        iframe.parentNode.insertBefore(overlayContainer, iframe);
+      }
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.player) {
+      this.player.destroy();
+    }
+  }
+
+  render() {
     return (
       <Grid>
         <div className="video-container">
