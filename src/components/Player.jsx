@@ -50,7 +50,7 @@ class Player extends React.Component {
   if (playerElement) {
     const iframe = playerElement.querySelector('iframe');
     if (iframe) {
-      // Create overlay div for play/pause
+      // Create overlay div for exclusive play/pause functionality
       const overlay = document.createElement('div');
       overlay.style.position = 'absolute';
       overlay.style.top = '0';
@@ -59,9 +59,11 @@ class Player extends React.Component {
       overlay.style.height = '100%';
       overlay.style.zIndex = '10';
       overlay.style.cursor = 'pointer';
+      overlay.style.pointerEvents = 'auto'; // Allow clicks on overlay
 
-      // Add event listener for play/pause only
+      // Play/pause toggle on overlay click
       overlay.onclick = (e) => {
+        e.preventDefault();
         e.stopPropagation();
         const playerState = this.player.getPlayerState();
         if (playerState === YT.PlayerState.PLAYING) {
@@ -71,14 +73,13 @@ class Player extends React.Component {
         }
       };
 
-      // Insert overlay to intercept only play/pause clicks
+      // Insert overlay to intercept clicks
       iframe.parentNode.insertBefore(overlay, iframe);
     }
   }
 }
 
-
-
+  
   componentWillUnmount() {
     if (this.player) {
       this.player.destroy();
