@@ -139,14 +139,9 @@
   display: none;
   margin: 0 auto 10px auto;
 }
-
-.video-container iframe {
-  /* Remove any pointer-events styling here */
-}
-
 .video-container {
   position: relative;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  padding-bottom: 56.25%; /* Maintain 16:9 ratio */
   height: 0;
   overflow: hidden;
 }
@@ -157,7 +152,11 @@
   left: 0;
   width: 100%;
   height: 100%;
-} 
+}
+
+.video-container iframe {
+  pointer-events: none !important;
+}
 
 #timer input[type="radio"] {
   display: none;
