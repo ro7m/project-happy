@@ -46,43 +46,38 @@ class Player extends React.Component {
   }
 
   addClickInterceptor() {
-    // Add an overlay div to intercept clicks
-    const playerElement = document.getElementById('video-screening');
-    if (playerElement) {
-      const iframe = playerElement.querySelector('iframe');
-      if (iframe) {
-        // Create overlay container
-        const overlayContainer = document.createElement('div');
-        overlayContainer.style.position = 'absolute';
-        overlayContainer.style.top = '0';
-        overlayContainer.style.left = '0';
-        overlayContainer.style.width = '100%';
-        overlayContainer.style.height = '100%';
-        overlayContainer.style.zIndex = '10';
-        overlayContainer.style.cursor = 'pointer';
+  // Select the player element and create an overlay for play/pause functionality
+  const playerElement = document.getElementById('video-screening');
+  if (playerElement) {
+    const iframe = playerElement.querySelector('iframe');
+    if (iframe) {
+      // Create overlay container
+      const overlayContainer = document.createElement('div');
+      overlayContainer.style.position = 'absolute';
+      overlayContainer.style.top = '0';
+      overlayContainer.style.left = '0';
+      overlayContainer.style.width = '100%';
+      overlayContainer.style.height = '100%';
+      overlayContainer.style.zIndex = '10';
+      overlayContainer.style.cursor = 'pointer';
 
-        // Create play/pause overlay
-        const playOverlay = document.createElement('div');
-        playOverlay.style.width = '100%';
-        playOverlay.style.height = '100%';
+      // Click handler for play/pause
+      overlayContainer.onclick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (this.player.getPlayerState() === YT.PlayerState.PLAYING) {
+          this.player.pauseVideo();
+        } else {
+          this.player.playVideo();
+        }
+      };
 
-        // Add click handler
-        overlayContainer.onclick = (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          if (this.player.getPlayerState() === YT.PlayerState.PLAYING) {
-            this.player.pauseVideo();
-          } else {
-            this.player.playVideo();
-          }
-        };
-
-        // Insert overlay
-        overlayContainer.appendChild(playOverlay);
-        iframe.parentNode.insertBefore(overlayContainer, iframe);
-      }
+      // Insert overlay above iframe to intercept clicks for play/pause
+      iframe.parentNode.insertBefore(overlayContainer, iframe);
     }
   }
+}
+
 
   componentWillUnmount() {
     if (this.player) {
