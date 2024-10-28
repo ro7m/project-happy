@@ -7,7 +7,7 @@ class Player extends React.Component {
     this.player = new YT.Player('video-screening', {
       videoId: this.props.videoId,
       playerVars: {
-        autoplay: 0,
+        autoplay: 1,
         loop: 1,  // Enable loop to prevent end screen
         playlist: this.props.videoId, // Required for loop to work
         modestbranding: 1,
@@ -46,37 +46,37 @@ class Player extends React.Component {
   }
 
   addClickInterceptor() {
-  // Select the player element and create an overlay for play/pause functionality
   const playerElement = document.getElementById('video-screening');
   if (playerElement) {
     const iframe = playerElement.querySelector('iframe');
     if (iframe) {
-      // Create overlay container
-      const overlayContainer = document.createElement('div');
-      overlayContainer.style.position = 'absolute';
-      overlayContainer.style.top = '0';
-      overlayContainer.style.left = '0';
-      overlayContainer.style.width = '100%';
-      overlayContainer.style.height = '100%';
-      overlayContainer.style.zIndex = '10';
-      overlayContainer.style.cursor = 'pointer';
+      // Create overlay div for play/pause
+      const overlay = document.createElement('div');
+      overlay.style.position = 'absolute';
+      overlay.style.top = '0';
+      overlay.style.left = '0';
+      overlay.style.width = '100%';
+      overlay.style.height = '100%';
+      overlay.style.zIndex = '10';
+      overlay.style.cursor = 'pointer';
 
-      // Click handler for play/pause
-      overlayContainer.onclick = (e) => {
-        e.preventDefault();
+      // Add event listener for play/pause only
+      overlay.onclick = (e) => {
         e.stopPropagation();
-        if (this.player.getPlayerState() === YT.PlayerState.PLAYING) {
+        const playerState = this.player.getPlayerState();
+        if (playerState === YT.PlayerState.PLAYING) {
           this.player.pauseVideo();
-        } else {
+        } else if (playerState === YT.PlayerState.PAUSED) {
           this.player.playVideo();
         }
       };
 
-      // Insert overlay above iframe to intercept clicks for play/pause
-      iframe.parentNode.insertBefore(overlayContainer, iframe);
+      // Insert overlay to intercept only play/pause clicks
+      iframe.parentNode.insertBefore(overlay, iframe);
     }
   }
 }
+
 
 
   componentWillUnmount() {
