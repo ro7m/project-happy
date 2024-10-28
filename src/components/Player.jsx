@@ -169,10 +169,12 @@ class Player extends React.Component {
     const iframe = document.querySelector('#actual-player');
     if (iframe) {
       const observer = new MutationObserver((mutations) => {
-        const ytpButton = iframe.contentDocument?.querySelector('.ytp-youtube-button');
-        if (ytpButton) {
-          ytpButton.style.display = 'none';
-          ytpButton.style.pointerEvents = 'none';
+        if (iframe.contentDocument) {
+          const ytpButton = iframe.contentDocument.querySelector('.ytp-youtube-button');
+          if (ytpButton) {
+            ytpButton.style.display = 'none';
+            ytpButton.style.pointerEvents = 'none';
+          }
         }
       });
 
@@ -189,6 +191,7 @@ class Player extends React.Component {
     }
   }
 
+  
   addClickInterceptor() {
     const playerElement = document.getElementById('video-screening');
     if (playerElement) {
