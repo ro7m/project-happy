@@ -2,13 +2,25 @@ import React from 'react';
 import Grid from 'react-bootstrap/lib/Grid';
 
 class Player extends React.Component {
-  state = {
-    currentVideoIndex: 0,
-    playlist: [this.props.videoId],
-    relatedVideos: [],
-    loading: true,
-    error: null
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentVideoIndex: 0,
+      playlist: [this.props.videoId],
+      relatedVideos: [],
+      loading: true,
+      error: null
+    };
+
+    // Bind methods
+    this.addYouTubeLogoStyle = this.addYouTubeLogoStyle.bind(this);
+    this.addYouTubeLogoBlocker = this.addYouTubeLogoBlocker.bind(this);
+    this.addClickInterceptor = this.addClickInterceptor.bind(this);
+    this.fetchRelatedVideos = this.fetchRelatedVideos.bind(this);
+    this.getRandomVideos = this.getRandomVideos.bind(this);
+    this.playNextVideo = this.playNextVideo.bind(this);
+    this.formatDuration = this.formatDuration.bind(this);
+  }
 
   async componentDidMount() {
     await this.fetchRelatedVideos(this.props.videoId);
@@ -57,7 +69,7 @@ class Player extends React.Component {
     this.addYouTubeLogoStyle();
   }
 
-  addYouTubeLogoStyle = () => {
+  addYouTubeLogoStyle() {
     const style = document.createElement('style');
     style.textContent = `
       .ytp-chrome-top-buttons,
@@ -151,9 +163,9 @@ class Player extends React.Component {
       }
     `;
     document.head.appendChild(style);
-  };
+  }
 
-  addYouTubeLogoBlocker = () => {
+  addYouTubeLogoBlocker() {
     const iframe = document.querySelector('#actual-player');
     if (iframe) {
       const observer = new MutationObserver((mutations) => {
@@ -175,7 +187,7 @@ class Player extends React.Component {
         console.log('Cannot access iframe content due to same-origin policy');
       }
     }
-  };
+  }
 
   addClickInterceptor() {
     const playerElement = document.getElementById('video-screening');
@@ -255,7 +267,7 @@ class Player extends React.Component {
     }
   }
 
-  fetchRelatedVideos = async (videoId) => {
+  async fetchRelatedVideos(videoId) {
     try {
       this.setState({ loading: true, error: null });
       
@@ -279,23 +291,23 @@ class Player extends React.Component {
         loading: false 
       });
     }
-  };
+  }
 
-  getRandomVideos = (videos, count) => {
+  getRandomVideos(videos, count) {
     const shuffled = [...videos].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, count);
-  };
+  }
 
-  playNextVideo = () => {
+  playNextVideo() {
     const { currentVideoIndex, playlist } = this.state;
     const nextIndex = (currentVideoIndex + 1) % playlist.length;
     
     this.setState({ currentVideoIndex: nextIndex }, () => {
       this.player.loadVideoById(playlist[nextIndex]);
     });
-  };
+  }
 
-  formatDuration = (seconds) => {
+  formatDuration(seconds) {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     const remainingSeconds = seconds % 60;
@@ -304,7 +316,7 @@ class Player extends React.Component {
       return `${hours}:${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
     }
     return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
-  };
+  }
 
   componentWillUnmount() {
     if (this.player) {
