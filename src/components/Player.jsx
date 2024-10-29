@@ -30,6 +30,7 @@ class Player extends React.Component {
       events: {
         onReady: (event) => {
           // Add click interceptor when player is ready
+          this.fullscreenOnPlay();
           this.addClickInterceptor();
         },
         onStateChange: (event) => {
@@ -44,7 +45,20 @@ class Player extends React.Component {
       }
     });
   }
-
+  
+  fullscreenOnPlay() {
+    const iframe = document.querySelector('#video-screening iframe');
+    if (iframe.requestFullscreen) {
+      iframe.requestFullscreen();
+    } else if (iframe.mozRequestFullScreen) { // Firefox
+      iframe.mozRequestFullScreen();
+    } else if (iframe.webkitRequestFullscreen) { // Chrome, Safari, Opera
+      iframe.webkitRequestFullscreen();
+    } else if (iframe.msRequestFullscreen) { // IE/Edge
+      iframe.msRequestFullscreen();
+    }
+}
+  
   addClickInterceptor() {
   const playerElement = document.getElementById('video-screening');
   if (playerElement) {
