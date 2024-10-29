@@ -14,7 +14,7 @@ class Player extends React.Component {
         rel: 0,
         controls: 1,
         showinfo: 0,
-        fs: 0,
+        fs: 1,
         iv_load_policy: 3,
         disablekb: 1,
         enablejsapi: 1,
