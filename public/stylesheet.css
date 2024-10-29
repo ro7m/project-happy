@@ -155,7 +155,7 @@
 }
 
 .video-container iframe {
-  pointer-events: none !important;
+  pointer-events: auto
 }
 
 #timer input[type="radio"] {
