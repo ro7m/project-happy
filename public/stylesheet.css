@@ -1,0 +1,307 @@
+.navbar-img {
+  height: 46px;
+  margin: 2%;
+}
+
+#results .btn.btn-default {
+  margin-bottom: 10px;
+}
+
+.result {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.result:hover {
+  box-shadow: 3px 3px 1px #bbb;
+}
+
+.centered {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.spinner {
+  margin: 0 auto 10px auto;
+  -webkit-animation: rotator 1.4s linear infinite;
+          animation: rotator 1.4s linear infinite;
+  display: block;
+}
+
+@-webkit-keyframes rotator {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(270deg);
+            transform: rotate(270deg);
+  }
+}
+
+@keyframes rotator {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(270deg);
+            transform: rotate(270deg);
+  }
+}
+.path {
+  stroke-dasharray: 187;
+  stroke-dashoffset: 0;
+  -webkit-transform-origin: center;
+          transform-origin: center;
+  -webkit-animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+          animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+}
+
+@-webkit-keyframes colors {
+  0% {
+    stroke: #4285F4;
+  }
+  25% {
+    stroke: #DE3E35;
+  }
+  50% {
+    stroke: #F7C223;
+  }
+  75% {
+    stroke: #1B9A59;
+  }
+  100% {
+    stroke: #4285F4;
+  }
+}
+
+@keyframes colors {
+  0% {
+    stroke: #4285F4;
+  }
+  25% {
+    stroke: #DE3E35;
+  }
+  50% {
+    stroke: #F7C223;
+  }
+  75% {
+    stroke: #1B9A59;
+  }
+  100% {
+    stroke: #4285F4;
+  }
+}
+
+@-webkit-keyframes dash {
+  0% {
+    stroke-dashoffset: 187;
+  }
+  50% {
+    stroke-dashoffset: 46.75;
+    -webkit-transform: rotate(135deg);
+            transform: rotate(135deg);
+  }
+  100% {
+    stroke-dashoffset: 187;
+    -webkit-transform: rotate(450deg);
+            transform: rotate(450deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dashoffset: 187;
+  }
+  50% {
+    stroke-dashoffset: 46.75;
+    -webkit-transform: rotate(135deg);
+            transform: rotate(135deg);
+  }
+  100% {
+    stroke-dashoffset: 187;
+    -webkit-transform: rotate(450deg);
+            transform: rotate(450deg);
+  }
+}
+
+#load-more-results {
+  display: none;
+  margin: 0 auto 10px auto;
+}
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%; /* Maintain 16:9 ratio */
+  height: 0;
+  overflow: hidden;
+}
+
+#video-screening {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.video-container iframe {
+  none !important;
+}
+
+#timer input[type="radio"] {
+  display: none;
+}
+
+#timer .radio-inline {
+  padding-left: 0;
+}
+
+#timer input[type="radio"] + span {
+  border: 2px solid #eee;
+}
+
+#timer input[type="radio"] + span:hover {
+  background-color: #fff;
+}
+
+#timer input[type="radio"]:checked + span{
+  border-color: #5cb85c;
+  font-weight: bold;
+}
+
+#timer button[type="submit"] {
+  border: 2px solid #5cb85c;
+  background-color: #fff;
+  color: #5cb85c;
+  font-weight: bold;
+}
+
+#timer button[type="submit"]:hover {
+  background-color: #5cb85c;
+  color: #fff;
+}
+
+#timer button[type="button"] {
+  border: 2px solid #000;
+  background-color: #fff;
+  color: #000;
+  font-weight: bold;
+}
+
+#timer button[type="button"]:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+/* Base for label styling */
+#timer #prevideo-activity + span {
+  border: none;
+  padding-top: 1px;
+  font-weight: bold;
+}
+
+.checkbox label {
+  padding-left: 0;
+}
+
+#timer #prevideo-activity[type="checkbox"]:not(:checked),
+#timer #prevideo-activity[type="checkbox"]:checked {
+  position: absolute;
+  left: -9999px;
+}
+#timer #prevideo-activity[type="checkbox"]:not(:checked) + span,
+#timer #prevideo-activity[type="checkbox"]:checked + span {
+  position: relative;
+  padding-left: 25px;
+  cursor: pointer;
+}
+
+/* checkbox aspect */
+#timer #prevideo-activity[type="checkbox"]:not(:checked) + span:before,
+#timer #prevideo-activity[type="checkbox"]:checked + span:before {
+  content: '';
+  position: absolute;
+  left:0; top: 2px;
+  width: 17px; height: 17px;
+  border: 1px solid #aaa;
+  background: #f8f8f8;
+  border-radius: 3px;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,.3)
+}
+/* checked mark aspect */
+#timer #prevideo-activity[type="checkbox"]:not(:checked) + span:after,
+#timer #prevideo-activity[type="checkbox"]:checked + span:after {
+  content: '✔';
+  position: absolute;
+  top: 3px; left: 4px;
+  font-size: 18px;
+  line-height: 0.8;
+  color: #09ad7e;
+  transition: all .2s;
+}
+/* checked mark aspect changes */
+#timer #prevideo-activity[type="checkbox"]:not(:checked) + span:after {
+  opacity: 0;
+  transform: scale(0);
+}
+#timer #prevideo-activity[type="checkbox"]:checked + span:after {
+  opacity: 1;
+  transform: scale(1);
+}
+/* disabled checkbox */
+#timer #prevideo-activity[type="checkbox"]:disabled:not(:checked) + span:before,
+#timer #prevideo-activity[type="checkbox"]:disabled:checked + span:before {
+  box-shadow: none;
+  border-color: #bbb;
+  background-color: #ddd;
+}
+
+#timer #prevideo-activity[type="checkbox"]:disabled:checked + span:after {
+  color: #999;
+}
+
+#timer #prevideo-activity[type="checkbox"]:disabled + span {
+  color: #aaa;
+}
+
+#timer #prevideo-activity[type="checkbox"]:checked:focus + span:before,
+#timer #prevideo-activity[type="checkbox"]:not(:checked):focus + span:before {
+  border: 1px dotted blue;
+}
+
+#timer #prevideo-activity + span:hover:before {
+  border: 1px solid #4778d9!important;
+}
+
+@media only screen and (max-width: 768px) {
+  .navbar-img {
+    display: block;
+    margin: auto;
+  }
+  .result {
+    margin: 10px;
+    text-align: center;
+  }
+  .result img {
+    margin: auto;
+  }
+  h4 {
+    margin-left: 10px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .navbar-form .input-group>.form-control {
+    width: 400px;
+  }
+}
