@@ -85,16 +85,20 @@ export function loadMoreVideos() {
     }
 
     const currentPage = parseInt(state.search.results.nextPageToken) || 1;
+    const query = state.search.results.query;
     
-    dispatch(displayExtraResults(true));
+    dispatch(displayExtraResults(true)); // Set loading to true
+
     axios({
       url: `${PIPED_INSTANCE}/search`,
       method: 'get',
       params: {
-        q: state.search.results.query,
-        filter: 'videos'
+        q: query,
+        filter: 'videos',
+        pageToken: currentPage // Add next page token to request
       }
-    }).then((res) => {
+    })
+    .then((res) => {
       const transformedItems = res.data.items
         .filter(item => item.type === 'stream')
         .map(item => ({
@@ -112,17 +116,20 @@ export function loadMoreVideos() {
         }));
 
       let results = {
-        query: state.search.results.query,
-        nextPageToken: (currentPage + 1).toString(),
-        items: transformedItems
+        query: query,
+        nextPageToken: res.data.nextPageToken, // Update nextPageToken with response
+        items: [...state.search.results.items, ...transformedItems] // Append new items to existing
       };
-      dispatch(displayExtraResults(false, null, results));
-    }).catch((err) => {
+
+      dispatch(displayExtraResults(false, null, results)); // Dispatch updated results
+    })
+    .catch((err) => {
       console.error('Load more error:', err);
-      dispatch(displayExtraResults(false, err));
+      dispatch(displayExtraResults(false, err)); // Handle error in state
     });
   };
 }
+
 
 export function displayExtraResults(isLoading, error, results) {
   return {
